@@ -32,7 +32,12 @@
   nixpkgs.config.allowUnfree = true;
   users.users.dylan = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "docker" ];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "docker"
+    ];
+    shell = pkgs.nushell;
     packages = with pkgs; [
       python3
       jdk21
