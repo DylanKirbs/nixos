@@ -32,18 +32,17 @@
     isNormalUser = true;
     extraGroups = [ "wheel" ];
     packages = with pkgs; [
-      firefox
-      htop
-      git
-      vim
-      tree
-      vscode
       python3
       jdk21
     ];
   };
 
   environment.systemPackages = with pkgs; [
+    firefox
+    htop
+    git
+    vim
+    tree
     nixfmt-rfc-style
     treefmt2
   ];

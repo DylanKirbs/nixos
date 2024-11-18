@@ -27,11 +27,21 @@
 
   programs.vscode = {
     enable = true;
-    #extensions = with pkgs.vscode-extensions; [
-    #  dracula-theme.theme-dracula
-    #  vscodevim.vim
-    #  yzhang.markdown-all-in-one
-    #];
+    extensions = with pkgs.vscode-extensions; [
+      streetsidesoftware.code-spell-checker
+      microsoft.intellicode
+      microsoft.extension-pack-for-java
+      mhutchie.git-graph
+      github.github-copilot
+      yu-zhang.markdown-all-in-one
+      yzane.markdown-pdf
+      baptist-benoist.nix
+      gruntfuggly.todo-tree
+      jkiviluoto.trailing-whitespace
+      vscode-icons-team.vscode-icons
+      tomoki1207.vscode-pdf
+      microsoft.docker
+    ];
   };
 
   home.sessionVariables = {
