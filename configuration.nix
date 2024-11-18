@@ -20,7 +20,7 @@
 
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
-  
+
   services.xserver.xkb.layout = "za";
   services.printing.enable = true;
 
@@ -46,7 +46,10 @@
     ];
   };
 
-  
+  environment.systemPackages = with pkgs; [
+    nixfmt-rfc-style
+    treefmt2
+  ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   # system.copySystemConfiguration = true;
