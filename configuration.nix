@@ -1,10 +1,7 @@
-{  lib, pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-    ];
+  imports = [ ./hardware-configuration.nix ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -51,9 +48,10 @@
     treefmt2
   ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   # system.copySystemConfiguration = true;
   system.stateVersion = "24.05"; # Did you read the comment?
-
 }
-

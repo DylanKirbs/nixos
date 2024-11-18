@@ -1,3 +1,5 @@
+# treefmt configuration file
+
 [formatter.nixfmt-rfc-style]
 command = "nixfmt"
 includes = ["*.nix"]
