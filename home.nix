@@ -1,4 +1,10 @@
-{ inputs, config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  pkgs-unstable,
+  ...
+}:
 
 {
   home.username = "dylan";
@@ -7,9 +13,9 @@
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
   home.packages = [
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
+    pkgs.python3
+    pkgs.jdk21
+    # pkgs-unstable.example
   ];
 
   home.file = {
@@ -26,15 +32,17 @@
   };
 
   programs = {
+
     git = {
       enable = true;
       userName = "Dylan Kirby";
       userEmail = "dylan.kirby.365@gmail.com";
     };
+
     vscode = {
       enable = true;
-      package = pkgs.vscode;
-      extensions = with pkgs.vscode-extensions; [
+      package = pkgs-unstable.vscode;
+      extensions = with pkgs-unstable.vscode-extensions; [
         streetsidesoftware.code-spell-checker
         #  microsoft.intellicode
         #  microsoft.extension-pack-for-java
@@ -50,6 +58,7 @@
         #  microsoft.docker
       ];
     };
+
     nushell = {
       enable = true;
       extraConfig = ''
@@ -83,6 +92,7 @@
         nano = "hx";
       };
     };
+
     carapace.enable = true;
     carapace.enableNushellIntegration = true;
 
@@ -96,6 +106,7 @@
         };
       };
     };
+
   };
 
   home.sessionVariables = {

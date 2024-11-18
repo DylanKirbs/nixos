@@ -1,7 +1,9 @@
 {
-  inputs,
+  config,
   lib,
   pkgs,
+  pkgs-unstable,
+  username,
   ...
 }:
 
@@ -43,40 +45,42 @@
       "docker"
     ];
     shell = pkgs.nushell;
-    packages = with pkgs; [
-      python3
-      jdk21
-    ];
   };
 
-  home-manager = {
-    useGlobalPkgs = true;
-    backupFileExtension = "backup";
-    extraSpecialArgs = {
-      inherit inputs;
-    };
-    users = {
-      "dylan" = import ./home.nix;
-    };
-  };
+  # home-manager = {
+  #   useGlobalPkgs = true;
+  #   backupFileExtension = "backup";
+  #   extraSpecialArgs = {
+  #     inherit inputs;
+  #   };
+  #   users = {
+  #     "dylan" = import ./home.nix;
+  #   };
+  # };
 
-  environment.systemPackages = with pkgs; [
-    firefox
-    htop
-    git
-    vim
-    tree
-    nixfmt-rfc-style
-    treefmt2
-    libreoffice-qt
-    hunspell
-    hunspellDicts.en_GB-ise
-  ];
+  environment.systemPackages =
+    (with pkgs; [
+      # Stable packages
+      firefox
+      htop
+      git
+      vim
+      tree
+      nixfmt-rfc-style
+      treefmt2
+      libreoffice-qt
+      hunspell
+      hunspellDicts.en_GB-ise
+    ])
+    ++ (with pkgs-unstable; [
+      # Unstable packages
+    ]);
 
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
   ];
+
   # system.copySystemConfiguration = true;
   system.stateVersion = "24.05"; # Did you read the comment?
 }
