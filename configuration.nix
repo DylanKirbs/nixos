@@ -21,6 +21,8 @@
   services.xserver.xkb.layout = "za";
   services.printing.enable = true;
 
+  virtualisation.docker.enable = true;
+
   hardware.pulseaudio.enable = false;
   services.pipewire = {
     enable = true;
@@ -30,7 +32,7 @@
   nixpkgs.config.allowUnfree = true;
   users.users.dylan = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "wheel" "networkmanager" "docker" ];
     packages = with pkgs; [
       python3
       jdk21
