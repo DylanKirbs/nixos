@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ inputs, lib, pkgs, ... }:
 
 {
   imports = [ ./hardware-configuration.nix ];
@@ -44,6 +44,15 @@
     ];
   };
 
+  home-manager = {
+    useGlobalPkgs = true;
+    backupFileExtension = "backup";
+    extraSpecialArgs = { inherit inputs; };
+    users = {
+      "dylan" = import ./home.nix;
+    };
+  };
+
   environment.systemPackages = with pkgs; [
     firefox
     htop
@@ -52,6 +61,9 @@
     tree
     nixfmt-rfc-style
     treefmt2
+    libreoffice-qt
+    hunspell
+    hunspellDicts.en_GB-ise
   ];
 
   nix.settings.experimental-features = [
