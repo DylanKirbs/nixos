@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/24.05";
+    unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
@@ -11,7 +12,7 @@
   };
 
   outputs =
-    { self, nixpkgs, ... }@inputs:
+    { self, nixpkgs, unstable, ... }@inputs:
     {
       nixosConfigurations.default = nixpkgs.lib.nixosSystem {
         specialArgs = {
