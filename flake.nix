@@ -22,7 +22,11 @@
     let
 
       system = "x86_64-linux";
-      allowed-unfree-pkgs = [ "vscode" ];
+      allowed-unfree-pkgs = [
+        "vscode"
+        "vscode-extension-github-copilot"
+        "vscode-extension-MS-python-vscode-pylance"
+      ];
 
       # Define the pkgs and unstable pkgs with the allowed unfree pkgs using the predicate
       pkgs = import nixpkgs {

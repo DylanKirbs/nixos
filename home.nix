@@ -45,18 +45,20 @@
       package = pkgs-unstable.vscode;
       extensions = with pkgs-unstable.vscode-extensions; [
         streetsidesoftware.code-spell-checker
-        #  microsoft.intellicode
-        #  microsoft.extension-pack-for-java
         mhutchie.git-graph
-        #  github.github-copilot
-        #  yu-zhang.markdown-all-in-one
-        #  yzane.markdown-pdf
-        #  baptist-benoist.nix
-        #  gruntfuggly.todo-tree
-        #  jkiviluoto.trailing-whitespace
-        #  vscode-icons-team.vscode-icons
-        #  tomoki1207.vscode-pdf
-        #  microsoft.docker
+        yzane.markdown-pdf
+        gruntfuggly.todo-tree
+        yzhang.markdown-all-in-one
+        vscode-icons-team.vscode-icons
+        visualstudioexptteam.vscodeintellicode
+        github.copilot
+        ms-python.python
+        ms-python.vscode-pylance
+        ms-azuretools.vscode-docker
+        bbenoist.nix
+        tomoki1207.pdf
+        vscjava.vscode-java-pack
+        # jkiviluoto.trailing-whitespace
       ];
     };
 
