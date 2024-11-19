@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   lib,
   pkgs,
   pkgs-unstable,
@@ -36,7 +37,6 @@
     pulse.enable = true;
   };
 
-  nixpkgs.config.allowUnfree = true;
   users.users.dylan = {
     isNormalUser = true;
     extraGroups = [
@@ -47,16 +47,19 @@
     shell = pkgs.nushell;
   };
 
-  # home-manager = {
-  #   useGlobalPkgs = true;
-  #   backupFileExtension = "backup";
-  #   extraSpecialArgs = {
-  #     inherit inputs;
-  #   };
-  #   users = {
-  #     "dylan" = import ./home.nix;
-  #   };
-  # };
+  # Using NixOS module home-manager
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    backupFileExtension = "backup";
+    extraSpecialArgs = {
+      inherit inputs;
+      inherit pkgs-unstable;
+    };
+    users = {
+      "dylan" = import ./home.nix;
+    };
+  };
 
   environment.systemPackages =
     (with pkgs; [

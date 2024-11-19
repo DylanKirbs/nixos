@@ -15,6 +15,7 @@
   home.packages = [
     pkgs.python3
     pkgs.jdk21
+    pkgs.helix
     # pkgs-unstable.example
   ];
 
@@ -86,11 +87,6 @@
         append /usr/bin/env
         )
       '';
-      shellAliases = {
-        vi = "hx";
-        vim = "hx";
-        nano = "hx";
-      };
     };
 
     carapace.enable = true;
@@ -106,7 +102,6 @@
         };
       };
     };
-
   };
 
   home.sessionVariables = {

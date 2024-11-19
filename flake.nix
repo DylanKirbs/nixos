@@ -18,29 +18,33 @@
       nixpkgs-unstable,
       home-manager,
       ...
-    }:
+    }@inputs:
     let
+
       system = "x86_64-linux";
-      lib = nixpkgs.lib;
-      pkgs = nixpkgs.legacyPackages.${system};
-      pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
+      allowed-unfree-pkgs = [ "vscode" ];
+
+      # Define the pkgs and unstable pkgs with the allowed unfree pkgs using the predicate
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) allowed-unfree-pkgs;
+      };
+      pkgs-unstable = import nixpkgs-unstable {
+        inherit system;
+        config.allowUnfreePredicate =
+          pkg: builtins.elem (nixpkgs-unstable.lib.getName pkg) allowed-unfree-pkgs;
+      };
     in
     {
       nixosConfigurations = {
         default = nixpkgs.lib.nixosSystem {
           inherit system;
-          modules = [ ./configuration.nix ];
+          modules = [
+            ./configuration.nix
+            inputs.home-manager.nixosModules.home-manager
+          ];
           specialArgs = {
-            inherit pkgs-unstable;
-          };
-        };
-      };
-
-      homeConfigurations = {
-        default = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = [ ./home.nix ];
-          specialArgs = {
+            inherit inputs;
             inherit pkgs-unstable;
           };
         };
