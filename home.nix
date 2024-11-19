@@ -44,21 +44,36 @@
       enable = true;
       package = pkgs-unstable.vscode;
       extensions = with pkgs-unstable.vscode-extensions; [
+
+        # Utilities
         streetsidesoftware.code-spell-checker
         mhutchie.git-graph
-        yzane.markdown-pdf
         gruntfuggly.todo-tree
-        yzhang.markdown-all-in-one
-        vscode-icons-team.vscode-icons
-        visualstudioexptteam.vscodeintellicode
-        github.copilot
-        ms-python.python
-        ms-python.vscode-pylance
         ms-azuretools.vscode-docker
         bbenoist.nix
+        formulahendry.code-runner
+
+        # LSP + Completion
+        visualstudioexptteam.vscodeintellicode
+        github.copilot
+
+        # Themes + Icons
+        vscode-icons-team.vscode-icons
+
+        # PDF + Markdown
         tomoki1207.pdf
-        vscjava.vscode-java-pack
-        # jkiviluoto.trailing-whitespace
+        yzane.markdown-pdf
+        yzhang.markdown-all-in-one
+
+        # Python
+        ms-python.python
+        ms-python.vscode-pylance
+        njpwerner.autodocstring
+
+        # Java
+        redhat.java
+        vscjava.vscode-java-debug
+        vscjava.vscode-java-dependency
       ];
     };
 
