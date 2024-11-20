@@ -13,7 +13,8 @@
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
   home.packages = [
-    pkgs.python3
+    pkgs.python312
+    pkgs.python312Packages.pip
     pkgs.jdk21
     pkgs.helix
 
