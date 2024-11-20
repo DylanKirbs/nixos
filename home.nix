@@ -45,6 +45,10 @@
     vscode = {
       enable = true;
       package = pkgs-unstable.vscode;
+
+      # temp fix: https://github.com/nix-community/home-manager/issues/5372
+      mutableExtensionsDir = false;
+
       extensions = with pkgs-unstable.vscode-extensions; [
 
         # Utilities
