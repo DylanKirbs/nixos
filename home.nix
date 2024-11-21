@@ -18,7 +18,6 @@
     pkgs.jdk21
     pkgs.helix
 
-    pkgs.kitty
     # pkgs-unstable.example
   ];
 
@@ -93,13 +92,11 @@
         $env.config = {
          show_banner: false,
          completions: {
-         case_sensitive: false # case-sensitive completions
-         quick: true    # set to false to prevent auto-selecting completions
-         partial: true    # set to false to prevent partial filling of the prompt
-         algorithm: "fuzzy"    # prefix or fuzzy
+         case_sensitive: false
+         quick: true
+         partial: true
+         algorithm: "fuzzy"
          external: {
-         # set to false to prevent nushell looking into $env.PATH to find more suggestions enable: true
-         # set to lower can improve completion performance at the cost of omitting some options
              max_results: 100
              completer: $carapace_completer # check 'carapace_completer'
            }
@@ -149,7 +146,6 @@
       enable-hot-corners = false;
       font-antialiasing = "grayscale";
       font-hinting = "slight";
-      gtk-theme = "Nordic";
       toolkit-accessibility = true;
     };
     "org/gnome/mutter" = {
@@ -159,15 +155,15 @@
       tap-to-click = true;
       two-finger-scrolling-enabled = true;
     };
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
       name = "Open Console";
-      command = "kitty -e tmux";
+      command = "kgx";
       binding = "<Ctrl><Alt>t";
     };
   };
 
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "vim";
   };
 
   # Let Home Manager install and manage itself.
