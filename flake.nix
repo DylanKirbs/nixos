@@ -26,6 +26,10 @@
         "vscode"
         "vscode-extension-github-copilot"
         "vscode-extension-MS-python-vscode-pylance"
+        "steam"
+        "steam-original"
+        "steam-unwrapped"
+        "steam-run"
       ];
 
       # Define the pkgs and unstable pkgs with the allowed unfree pkgs using the predicate
@@ -50,6 +54,7 @@
           specialArgs = {
             inherit inputs;
             inherit pkgs-unstable;
+            inherit allowed-unfree-pkgs;
           };
         };
       };

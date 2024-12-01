@@ -4,7 +4,7 @@
   lib,
   pkgs,
   pkgs-unstable,
-  username,
+  allowed-unfree-pkgs,
   ...
 }:
 
@@ -37,6 +37,8 @@
     pulse.enable = true;
   };
 
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) allowed-unfree-pkgs;
+
   users.users.dylan = {
     isNormalUser = true;
     extraGroups = [
@@ -46,6 +48,14 @@
     ];
     shell = pkgs.nushell;
   };
+
+  programs.steam = {
+      package = pkgs.steam;
+      enable = true;
+      remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+      dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+      localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+    };
 
   # Using NixOS module home-manager
   home-manager = {
