@@ -62,6 +62,7 @@
         # LSP + Completion
         visualstudioexptteam.vscodeintellicode
         github.copilot
+        github.copilot-chat
 
         # Themes + Icons
         vscode-icons-team.vscode-icons

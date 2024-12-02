@@ -25,6 +25,7 @@
       allowed-unfree-pkgs = [
         "vscode"
         "vscode-extension-github-copilot"
+        "vscode-extension-github-copilot-chat"
         "vscode-extension-MS-python-vscode-pylance"
         "steam"
         "steam-original"
