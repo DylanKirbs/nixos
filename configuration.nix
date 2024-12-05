@@ -78,6 +78,10 @@
       htop
       git
       vim
+      inetutils
+      file
+      wget
+      python3
       tree
       nixfmt-rfc-style
       treefmt2

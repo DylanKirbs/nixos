@@ -75,6 +75,8 @@
         # Python
         ms-python.python
         ms-python.vscode-pylance
+        ms-python.isort
+        ms-python.black-formatter
         njpwerner.autodocstring
 
         # Java
