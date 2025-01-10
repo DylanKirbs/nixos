@@ -46,7 +46,7 @@
     in
     {
       nixosConfigurations = {
-        default = nixpkgs.lib.nixosSystem {
+        kirby = nixpkgs.lib.nixosSystem {
           inherit system;
           modules = [
             ./configuration.nix
