@@ -18,6 +18,11 @@
     pkgs.jdk21
     pkgs.helix
 
+    pkgs.lutris
+    pkgs.gimp-with-plugins
+
+    pkgs.reaper
+
     # pkgs-unstable.example
   ];
 
@@ -58,6 +63,8 @@
         ms-azuretools.vscode-docker
         bbenoist.nix
         formulahendry.code-runner
+        arrterian.nix-env-selector
+        usernamehw.errorlens
 
         # LSP + Completion
         visualstudioexptteam.vscodeintellicode
@@ -83,6 +90,11 @@
         redhat.java
         vscjava.vscode-java-debug
         vscjava.vscode-java-dependency
+
+        # Haskell
+        haskell.haskell
+        justusadam.language-haskell
+        hoovercj.haskell-linter
       ];
     };
 
