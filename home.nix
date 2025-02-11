@@ -94,7 +94,6 @@
         # Haskell
         haskell.haskell
         justusadam.language-haskell
-        hoovercj.haskell-linter
       ];
     };
 
