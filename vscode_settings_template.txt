@@ -1,0 +1,13 @@
+{
+    "nixEnvSelector.nixFile": "${workspaceRoot}/shell.nix",
+    "terminal.integrated.profiles.linux": {
+        "NixShell": {
+            "path": "nu",
+            "args": [
+                "-c",
+                "NIXPKGS_ALLOW_UNFREE=1 NIXPKGS_ALLOW_INSECURE=1 nix-shell --run nu"
+            ]
+        }
+    },
+    "terminal.integrated.defaultProfile.linux": "NixShell"
+}

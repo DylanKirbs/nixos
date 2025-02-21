@@ -16,8 +16,10 @@
     pkgs.python312
     pkgs.python312Packages.pip
     pkgs.jdk21
+    pkgs.maven
     pkgs.helix
-
+    pkgs.texliveBasic
+    pkgs.direnv
     pkgs.lutris
     pkgs.gimp-with-plugins
 
@@ -90,6 +92,7 @@
         redhat.java
         vscjava.vscode-java-debug
         vscjava.vscode-java-dependency
+        vscjava.vscode-maven
 
         # Haskell
         haskell.haskell
