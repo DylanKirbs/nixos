@@ -15,11 +15,12 @@
   home.packages = [
     pkgs.python312
     pkgs.python312Packages.pip
+    pkgs.python312Packages.numpy
+    pkgs.python312Packages.pandas
     pkgs.jdk21
     pkgs.maven
     pkgs.helix
     pkgs.texliveBasic
-    pkgs.direnv
     pkgs.lutris
     pkgs.gimp-with-plugins
 
