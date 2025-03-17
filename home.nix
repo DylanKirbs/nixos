@@ -20,10 +20,10 @@
     pkgs.jdk21
     pkgs.maven
     pkgs.helix
-    pkgs.texliveBasic
+    pkgs.texliveFull
     pkgs.lutris
     pkgs.gimp-with-plugins
-
+    pkgs.jabref
     pkgs.reaper
 
     # pkgs-unstable.example
@@ -77,10 +77,11 @@
         # Themes + Icons
         vscode-icons-team.vscode-icons
 
-        # PDF + Markdown
-        tomoki1207.pdf
+        # PDF + Markdown + Latex
+        # tomoki1207.pdf
         yzane.markdown-pdf
         yzhang.markdown-all-in-one
+        james-yu.latex-workshop
 
         # Python
         ms-python.python
@@ -95,7 +96,7 @@
         vscjava.vscode-java-dependency
         vscjava.vscode-maven
 
-        # Haskell
+        # Haskell & Other Functional / Schema Langs
         haskell.haskell
         justusadam.language-haskell
       ];

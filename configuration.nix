@@ -29,6 +29,10 @@
   services.xserver.xkb.layout = "za";
   services.printing.enable = true;
 
+  services.openvpn.servers = {
+    thmVPN  = { config = '' config /home/dylan/openvpn/dylan.kirby.365.ovpn ''; };
+  };
+
   virtualisation.docker.enable = true;
 
   hardware.pulseaudio.enable = false;
@@ -88,6 +92,9 @@
       libreoffice-qt
       hunspell
       hunspellDicts.en_GB-ise
+      ffmpeg-full
+      gnupg
+      pinentry-tty
     ])
     ++ (with pkgs-unstable; [
       # Unstable packages
