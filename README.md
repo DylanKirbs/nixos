@@ -2,6 +2,18 @@
 
 ![NixOs Logo](https://img.shields.io/badge/Nix%20OS-5277C3?style=for-the-badge&logo=Nixos&logoColor=white)
 
+
+## How to switch
+
+```
+sudo nixos-rebuild switch --flake .#<user>@<hostname>
+```
+
+> See `users/` for user configurations<br>
+> See `hosts/` for host configurations
+
+---
+
 This is my personal NixOS configuration. It is a work in progress and is constantly changing. I am using this repository to keep track of my configuration and to make it easier to replicate my setup on other machines.
 
 Currently, this configuration uses a flakes-based setup with a NixOS module approach to Home Manager. This allows me to easily manage my system configuration and user configuration in a single repository.
