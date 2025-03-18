@@ -23,5 +23,4 @@
     enable = true;
     defaultCacheTtl = 1800;
   };
-
 }

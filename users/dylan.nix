@@ -7,9 +7,7 @@
 }:
 
 {
-  imports = [
-    ./common.nix
-  ];
+  imports = [ ./common.nix ];
 
   home.username = "dylan";
   home.homeDirectory = "/home/dylan";

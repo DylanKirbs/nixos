@@ -58,8 +58,10 @@
         builtins.map (name: {
           name = builtins.replaceStrings [ ".nix" ] [ "" ] name;
           value =
-            if builtins.pathExists ./hosts/${name} then ./hosts/${name}
-            else throw "Host configuration '${name}' not found!";
+            if builtins.pathExists ./hosts/${name} then
+              ./hosts/${name}
+            else
+              throw "Host configuration '${name}' not found!";
         }) (listNixFiles ./hosts)
       );
 
@@ -67,8 +69,10 @@
         builtins.map (name: {
           name = builtins.replaceStrings [ ".nix" ] [ "" ] name;
           value =
-            if builtins.pathExists ./users/${name} then ./users/${name}
-            else throw "User configuration '${name}' not found!";
+            if builtins.pathExists ./users/${name} then
+              ./users/${name}
+            else
+              throw "User configuration '${name}' not found!";
         }) (listNixFiles ./users)
       );
 
@@ -79,20 +83,27 @@
       };
 
       # Helper function to create a NixOS configuration
-      mkNixOSConfig = { host, user ? currentUser }: nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {
-          inherit pkgs pkgs-unstable allowed-unfree-pkgs;
+      mkNixOSConfig =
+        {
+          host,
+          user ? currentUser,
+        }:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit pkgs pkgs-unstable allowed-unfree-pkgs;
+          };
+          modules = [
+            hosts.${host}
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.users.${user} = users.${user};
+              home-manager.extraSpecialArgs = {
+                inherit pkgs pkgs-unstable allowed-unfree-pkgs;
+              };
+            }
+          ];
         };
-        modules = [
-          hosts.${host}
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.users.${user} = users.${user};
-            home-manager.extraSpecialArgs = { inherit pkgs pkgs-unstable allowed-unfree-pkgs; };
-          }
-        ];
-      };
 
       # Helper function to create a Home Manager configuration
       mkHomeConfig =
@@ -107,10 +118,15 @@
     in
     {
       # NixOS configurations for all user-host combinations
-    nixosConfigurations = builtins.listToAttrs (builtins.map ({ user, host }: {
-      name = "${user}@${host}";
-      value = mkNixOSConfig { inherit host user; };
-    }) userHostCombinations);
+      nixosConfigurations = builtins.listToAttrs (
+        builtins.map (
+          { user, host }:
+          {
+            name = "${user}@${host}";
+            value = mkNixOSConfig { inherit host user; };
+          }
+        ) userHostCombinations
+      );
 
       # Home Manager configurations
       homeConfigurations = builtins.mapAttrs (name: value: mkHomeConfig { user = name; }) users;

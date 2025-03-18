@@ -6,9 +6,7 @@
   ...
 }:
 {
-  imports = [
-    ./common.nix
-  ];
+  imports = [ ./common.nix ];
 
   # Host-specific settings
   networking.hostName = "work";
