@@ -7,10 +7,12 @@
 }:
 
 {
+  imports = [
+    ./common.nix
+  ];
+
   home.username = "dylan";
   home.homeDirectory = "/home/dylan";
-
-  home.stateVersion = "24.05"; # Please read the comment before changing.
 
   home.packages = [
     pkgs.python312
@@ -25,22 +27,8 @@
     pkgs.gimp-with-plugins
     pkgs.jabref
     pkgs.reaper
-
     # pkgs-unstable.example
   ];
-
-  home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
-
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
-  };
 
   programs = {
 
@@ -144,47 +132,44 @@
     };
   };
 
-  dconf.settings = {
-    "org/gnome/shell" = {
-      favorite-apps = [
-        "firefox.desktop"
-        "vscode.desktop"
-      ];
-      had-bluetooth-devices-setup = true;
-      remember-mount-password = false;
-      welcome-dialog-last-shown-version = "42.4";
-    };
-    "org/gnome/shell/extensions/hidetopbar" = {
-      enable-active-window = false;
-      enable-intellihide = false;
-    };
-    "org/gnome/desktop/interface" = {
-      clock-show-seconds = true;
-      clock-show-weekday = true;
-      color-scheme = "prefer-dark";
-      enable-hot-corners = false;
-      font-antialiasing = "grayscale";
-      font-hinting = "slight";
-      toolkit-accessibility = true;
-    };
-    "org/gnome/mutter" = {
-      dynamic-workspaces = true;
-    };
-    "org/gnome/desktop/peripherals/touchpad" = {
-      tap-to-click = true;
-      two-finger-scrolling-enabled = true;
-    };
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-      name = "Open Console";
-      command = "kgx";
-      binding = "<Ctrl><Alt>t";
-    };
-  };
+  # dconf.settings = {
+  #   "org/gnome/shell" = {
+  #     favorite-apps = [
+  #       "firefox.desktop"
+  #       "vscode.desktop"
+  #     ];
+  #     had-bluetooth-devices-setup = true;
+  #     remember-mount-password = false;
+  #     welcome-dialog-last-shown-version = "42.4";
+  #   };
+  #   "org/gnome/shell/extensions/hidetopbar" = {
+  #     enable-active-window = false;
+  #     enable-intellihide = false;
+  #   };
+  #   "org/gnome/desktop/interface" = {
+  #     clock-show-seconds = true;
+  #     clock-show-weekday = true;
+  #     color-scheme = "prefer-dark";
+  #     enable-hot-corners = false;
+  #     font-antialiasing = "grayscale";
+  #     font-hinting = "slight";
+  #     toolkit-accessibility = true;
+  #   };
+  #   "org/gnome/mutter" = {
+  #     dynamic-workspaces = true;
+  #   };
+  #   "org/gnome/desktop/peripherals/touchpad" = {
+  #     tap-to-click = true;
+  #     two-finger-scrolling-enabled = true;
+  #   };
+  #   "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+  #     name = "Open Console";
+  #     command = "kgx";
+  #     binding = "<Ctrl><Alt>t";
+  #   };
+  # };
 
   home.sessionVariables = {
     EDITOR = "vim";
   };
-
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
 }

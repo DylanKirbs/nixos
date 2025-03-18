@@ -1,14 +1,10 @@
 {
-  description = "Dylan Kirby's NixOS Config";
-
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    home-manager.url = "github:nix-community/home-manager/release-24.05";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -17,10 +13,8 @@
       nixpkgs,
       nixpkgs-unstable,
       home-manager,
-      ...
-    }@inputs:
+    }:
     let
-
       system = "x86_64-linux";
       allowed-unfree-pkgs = [
         "vscode"
@@ -45,21 +39,80 @@
         config.allowUnfreePredicate =
           pkg: builtins.elem (nixpkgs-unstable.lib.getName pkg) allowed-unfree-pkgs;
       };
-    in
-    {
-      nixosConfigurations = {
-        kirby = nixpkgs.lib.nixosSystem {
+
+      # Dynamically detect the current user and host
+      currentUser = builtins.getEnv "USER";
+      currentHost = builtins.getEnv "HOSTNAME";
+
+      # Helper function to list Nix files in a directory, ignoring `common.nix`
+      listNixFiles =
+        dir:
+        let
+          files = builtins.attrNames (builtins.readDir dir);
+          nixFiles = builtins.filter (name: builtins.match ".*\\.nix" name != null) files;
+        in
+        builtins.filter (name: name != "common.nix") nixFiles;
+
+      # Dynamically read hosts and users
+      hosts = builtins.listToAttrs (
+        builtins.map (name: {
+          name = builtins.replaceStrings [ ".nix" ] [ "" ] name;
+          value =
+            if builtins.pathExists ./hosts/${name} then ./hosts/${name}
+            else throw "Host configuration '${name}' not found!";
+        }) (listNixFiles ./hosts)
+      );
+
+      users = builtins.listToAttrs (
+        builtins.map (name: {
+          name = builtins.replaceStrings [ ".nix" ] [ "" ] name;
+          value =
+            if builtins.pathExists ./users/${name} then ./users/${name}
+            else throw "User configuration '${name}' not found!";
+        }) (listNixFiles ./users)
+      );
+
+      # Generate all user-host combinations
+      userHostCombinations = pkgs.lib.cartesianProductOfSets {
+        user = builtins.attrNames users;
+        host = builtins.attrNames hosts;
+      };
+
+      # Helper function to create a NixOS configuration
+      mkNixOSConfig = { host, user ? currentUser }: nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = {
+          inherit pkgs pkgs-unstable allowed-unfree-pkgs;
+        };
+        modules = [
+          hosts.${host}
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.users.${user} = users.${user};
+            home-manager.extraSpecialArgs = { inherit pkgs pkgs-unstable allowed-unfree-pkgs; };
+          }
+        ];
+      };
+
+      # Helper function to create a Home Manager configuration
+      mkHomeConfig =
+        { user }:
+        home-manager.lib.homeManagerConfiguration {
           inherit system;
-          modules = [
-            ./configuration.nix
-            inputs.home-manager.nixosModules.home-manager
-          ];
-          specialArgs = {
-            inherit inputs;
-            inherit pkgs-unstable;
-            inherit allowed-unfree-pkgs;
+          configuration = users.${user};
+          extraSpecialArgs = {
+            inherit pkgs pkgs-unstable allowed-unfree-pkgs;
           };
         };
-      };
+    in
+    {
+      # NixOS configurations for all user-host combinations
+    nixosConfigurations = builtins.listToAttrs (builtins.map ({ user, host }: {
+      name = "${user}@${host}";
+      value = mkNixOSConfig { inherit host user; };
+    }) userHostCombinations);
+
+      # Home Manager configurations
+      homeConfigurations = builtins.mapAttrs (name: value: mkHomeConfig { user = name; }) users;
     };
 }
