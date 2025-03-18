@@ -78,7 +78,6 @@
   environment.systemPackages =
     (with pkgs; [
       # Stable packages
-      firefox
       htop
       git
       vim
@@ -98,6 +97,7 @@
     ])
     ++ (with pkgs-unstable; [
       # Unstable packages
+      firefox
     ]);
 
   nix.settings.experimental-features = [
