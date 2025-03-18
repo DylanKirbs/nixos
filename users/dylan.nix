@@ -12,21 +12,25 @@
   home.username = "dylan";
   home.homeDirectory = "/home/dylan";
 
-  home.packages = [
-    pkgs.python312
-    pkgs.python312Packages.pip
-    pkgs.python312Packages.numpy
-    pkgs.python312Packages.pandas
-    pkgs.jdk21
-    pkgs.maven
-    pkgs.helix
-    pkgs.texliveFull
-    pkgs.lutris
-    pkgs.gimp-with-plugins
-    pkgs.jabref
-    pkgs.reaper
-    # pkgs-unstable.example
-  ];
+  home.packages =
+    (with pkgs; [
+      # Stable packages
+      python312
+      python312Packages.pip
+      python312Packages.numpy
+      python312Packages.pandas
+      jdk21
+      maven
+      helix
+      texliveFull
+      lutris
+      gimp-with-plugins
+      jabref
+      reaper
+    ])
+    ++ (with pkgs-unstable; [
+      # Unstable packages
+    ]);
 
   programs = {
 

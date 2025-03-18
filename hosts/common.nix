@@ -18,9 +18,6 @@
     extraSpecialArgs = {
       inherit pkgs pkgs-unstable allowed-unfree-pkgs;
     };
-    # users = {
-    #   "dylan" = import ./home.nix;
-    # };
   };
 
   # Packages
