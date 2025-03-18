@@ -3,8 +3,15 @@
 ![NixOs Logo](https://img.shields.io/badge/Nix%20OS-5277C3?style=for-the-badge&logo=Nixos&logoColor=white)
 
 
-## How to switch
+## How to update and/or switch the configuration
 
+**Update the flake:**
+```
+sudo nix flake update
+```
+
+
+**Switch the configuration to a specific user on a specific host:**
 ```
 sudo nixos-rebuild switch --flake .#<user>@<hostname>
 ```
