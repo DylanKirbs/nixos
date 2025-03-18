@@ -128,7 +128,7 @@
         ) userHostCombinations
       );
 
-      # Home Manager configurations
+      # Home Manager configurations (to allow non-sudo users to manage their own configuration: idk if it actually works though)
       homeConfigurations = builtins.mapAttrs (name: value: mkHomeConfig { user = name; }) users;
     };
 }
