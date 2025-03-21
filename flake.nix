@@ -91,7 +91,7 @@
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
-            inherit pkgs pkgs-unstable allowed-unfree-pkgs;
+            inherit pkgs pkgs-unstable allowed-unfree-pkgs user;
           };
           modules = [
             hosts.${host}
@@ -99,7 +99,7 @@
             {
               home-manager.users.${user} = users.${user};
               home-manager.extraSpecialArgs = {
-                inherit pkgs pkgs-unstable allowed-unfree-pkgs;
+                inherit pkgs pkgs-unstable allowed-unfree-pkgs user;
               };
             }
           ];

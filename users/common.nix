@@ -3,6 +3,7 @@
   lib,
   pkgs,
   pkgs-unstable,
+  user,
   ...
 }:
 
@@ -11,6 +12,16 @@
 
   home.stateVersion = "24.05"; # Please read the comment before changing.
   programs.home-manager.enable = true;
+
+  users.users.${user} = {
+    isNormalUser = true;
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "docker"
+    ];
+    shell = pkgs.nushell;
+  };
 
   home.packages = [
     # pkgs.example

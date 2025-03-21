@@ -17,16 +17,6 @@
     };
   };
 
-  users.users.dylan = {
-    isNormalUser = true;
-    extraGroups = [
-      "wheel"
-      "networkmanager"
-      "docker"
-    ];
-    shell = pkgs.nushell;
-  };
-
   programs.steam = {
     package = pkgs.steam;
     enable = true;
