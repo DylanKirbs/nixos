@@ -21,6 +21,11 @@
 
   services.gpg-agent = {
     enable = true;
-    defaultCacheTtl = 1800;
+    defaultCacheTtl = 600;
+    maxCacheTtl = 7200;
+    pinentryPackage = pkgs.pinentry-tty;
+    extraConfig = ''
+      allow-loopback-pinentry
+    '';
   };
 }
