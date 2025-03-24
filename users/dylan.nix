@@ -12,6 +12,7 @@
     ./modules/nushell.nix
     ./modules/gnome.nix
     ./modules/sensible-vscode.nix
+    ./modules/lazy-nvim.nix
    ];
 
   home.username = "dylan";
