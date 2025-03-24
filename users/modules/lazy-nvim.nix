@@ -95,7 +95,7 @@
             -- Setup language servers here
             lspconfig.pyright.setup({ on_attach = on_attach })
             lspconfig.rust_analyzer.setup({ on_attach = on_attach })
-            lspconfig.tsserver.setup({ on_attach = on_attach })
+            lspconfig["typescript-tools"].setup({ on_attach = on_attach })
           end
         },
 
@@ -168,10 +168,11 @@
 
   # Ensure some dependencies are available
   home.packages = with pkgs; [
-    # For Telescope fuzzy finding
     ripgrep
     fd
-    # For LSP servers
     nodejs
+    gcc
+    zig
+    cl
   ];
 }
