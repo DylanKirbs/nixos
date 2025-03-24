@@ -3,6 +3,7 @@
   lib,
   pkgs,
   pkgs-unstable,
+  user,
   ...
 }:
 {
@@ -16,6 +17,7 @@
       config = ''config /home/dylan/openvpn/dylan.kirby.365.ovpn '';
     };
   };
+
 
   programs.steam = {
     package = pkgs.steam;

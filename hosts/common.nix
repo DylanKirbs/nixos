@@ -20,6 +20,16 @@
     };
   };
 
+  users.users.${user} = {
+    isNormalUser = true;
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "docker"
+    ];
+    shell = pkgs.nushell;
+  };
+
   # Packages
   # nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) allowed-unfree-pkgs;
   environment.systemPackages =
