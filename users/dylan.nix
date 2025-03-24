@@ -13,7 +13,7 @@
     ./modules/gnome.nix
     ./modules/sensible-vscode.nix
     ./modules/lazy-nvim.nix
-   ];
+  ];
 
   home.username = "dylan";
   home.homeDirectory = "/home/dylan";
@@ -39,12 +39,8 @@
     ]);
 
   programs.git = {
-      enable = true;
-      userName = "Dylan Kirby";
-      userEmail = "dylan.kirby.365@gmail.com";
-    };
-
-  home.sessionVariables = {
-    EDITOR = "vim";
+    enable = true;
+    userName = "Dylan Kirby";
+    userEmail = "dylan.kirby.365@gmail.com";
   };
 }

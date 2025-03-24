@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   programs.nushell = {
@@ -65,5 +70,4 @@
       };
     };
   };
-
 }

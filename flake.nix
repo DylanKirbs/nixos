@@ -91,7 +91,12 @@
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
-            inherit pkgs pkgs-unstable allowed-unfree-pkgs user;
+            inherit
+              pkgs
+              pkgs-unstable
+              allowed-unfree-pkgs
+              user
+              ;
           };
           modules = [
             hosts.${host}
@@ -99,23 +104,27 @@
             {
               home-manager.users.${user} = users.${user};
               home-manager.extraSpecialArgs = {
-                inherit pkgs pkgs-unstable allowed-unfree-pkgs user;
+                inherit
+                  pkgs
+                  pkgs-unstable
+                  allowed-unfree-pkgs
+                  user
+                  ;
               };
             }
           ];
         };
-
-      # # Helper function to create a Home Manager configuration
-      # mkHomeConfig =
-      #   { user }:
-      #   home-manager.lib.homeManagerConfiguration {
-      #     inherit system;
-      #     configuration = users.${user};
-      #     extraSpecialArgs = {
-      #       inherit pkgs pkgs-unstable allowed-unfree-pkgs;
-      #     };
-      #   };
     in
+    # # Helper function to create a Home Manager configuration
+    # mkHomeConfig =
+    #   { user }:
+    #   home-manager.lib.homeManagerConfiguration {
+    #     inherit system;
+    #     configuration = users.${user};
+    #     extraSpecialArgs = {
+    #       inherit pkgs pkgs-unstable allowed-unfree-pkgs;
+    #     };
+    #   };
     {
       # NixOS configurations for all user-host combinations
       nixosConfigurations = builtins.listToAttrs (

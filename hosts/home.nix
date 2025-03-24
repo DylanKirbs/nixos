@@ -18,7 +18,6 @@
     };
   };
 
-
   programs.steam = {
     package = pkgs.steam;
     enable = true;

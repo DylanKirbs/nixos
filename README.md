@@ -27,6 +27,24 @@ Currently, this configuration uses a flakes-based setup with a NixOS module appr
 
 The flake imports packages from Nixpkgs 24.05 and unstable in two separate inputs. This allows more flexibility in the packages that can be used in the configuration. In addition it features an `allowed-unfree-pkgs` attribute that allows me to easily configure which packages are allowed to be used in both safe and unsafe package repositories.
 
+## Checking the config
+
+To check the configuration, run the following command:
+
+> We need impure because we use an absolute path to reference the `hardware-configuration.nix` file
+
+```
+nix flake check --impure
+```
+
+If all is well, then the configuration is good to go.
+
+You may also wish to format the configuration:
+
+```
+treefmt
+```
+
 
 # Inspired by:
 
