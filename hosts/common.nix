@@ -4,6 +4,7 @@
   pkgs,
   pkgs-unstable,
   allowed-unfree-pkgs,
+  user,
   ...
 }:
 {
