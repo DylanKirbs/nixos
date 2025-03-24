@@ -105,16 +105,16 @@
           ];
         };
 
-      # Helper function to create a Home Manager configuration
-      mkHomeConfig =
-        { user }:
-        home-manager.lib.homeManagerConfiguration {
-          inherit system;
-          configuration = users.${user};
-          extraSpecialArgs = {
-            inherit pkgs pkgs-unstable allowed-unfree-pkgs;
-          };
-        };
+      # # Helper function to create a Home Manager configuration
+      # mkHomeConfig =
+      #   { user }:
+      #   home-manager.lib.homeManagerConfiguration {
+      #     inherit system;
+      #     configuration = users.${user};
+      #     extraSpecialArgs = {
+      #       inherit pkgs pkgs-unstable allowed-unfree-pkgs;
+      #     };
+      #   };
     in
     {
       # NixOS configurations for all user-host combinations
@@ -129,6 +129,6 @@
       );
 
       # Home Manager configurations (to allow non-sudo users to manage their own configuration: idk if it actually works though)
-      homeConfigurations = builtins.mapAttrs (name: value: mkHomeConfig { user = name; }) users;
+      # homeConfigurations = builtins.mapAttrs (name: value: mkHomeConfig { user = name; }) users;
     };
 }
