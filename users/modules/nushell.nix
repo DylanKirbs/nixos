@@ -11,11 +11,7 @@
 
     extraConfig = ''
       let carapace_completer = {|spans|
-        try {
           carapace $spans.0 nushell $spans | from json
-        } catch {
-          []
-        }
       }
 
       $env.config = {
@@ -57,7 +53,7 @@
       # Zoxide configuration
       ${pkgs.zoxide}/bin/zoxide init nushell --cmd z | save -f ~/.zoxide.nu
       source ~/.zoxide.nu
-      
+
       def --env zh [...rest] {
         if ($rest | is-empty) {
           # Interactive mode when no arguments provided - pipe result to cd
@@ -95,5 +91,4 @@
   programs.zoxide = {
     enable = true;
   };
-
 }
