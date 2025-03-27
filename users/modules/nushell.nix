@@ -58,17 +58,17 @@
       ${pkgs.zoxide}/bin/zoxide init nushell --cmd z | save -f ~/.zoxide.nu
       source ~/.zoxide.nu
       
-      def --env z [...rest] {
+      def --env zh [...rest] {
         if ($rest | is-empty) {
           # Interactive mode when no arguments provided - pipe result to cd
           let selected = (${pkgs.zoxide}/bin/zoxide query -i)
           if ($selected | is-empty) {
             return
           }
-          cd $selected
+          z $selected
         } else {
           # Normal zoxide behavior with arguments
-          ${pkgs.zoxide}/bin/zoxide query --exclude $env.PWD ...$rest | cd $in
+          z ...$rest
         }
       }
 

@@ -30,12 +30,14 @@
       helix
       texliveFull
       lutris
-      gimp-with-plugins
       jabref
       reaper
     ])
     ++ (with pkgs-unstable; [
       # Unstable packages
+      tex-fmt
+      gimp-with-plugins
+      weylus
     ]);
 
   programs.git = {
