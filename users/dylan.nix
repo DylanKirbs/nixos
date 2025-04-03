@@ -25,13 +25,17 @@
       python312Packages.pip
       python312Packages.numpy
       python312Packages.pandas
+      python312Packages.pygments
       jdk21
       maven
       helix
       texliveFull
+      texlivePackages.pygmentex
       lutris
       jabref
       reaper
+      libcgroup
+      tmux
     ])
     ++ (with pkgs-unstable; [
       # Unstable packages

@@ -49,6 +49,10 @@
       vscjava.vscode-java-dependency
       vscjava.vscode-maven
 
+      # C
+      ms-vscode.cpptools
+      ms-vscode.cmake-tools
+
       # Haskell & Other Functional / Schema Langs
       haskell.haskell
       justusadam.language-haskell

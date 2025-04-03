@@ -21,12 +21,13 @@
         "vscode-extension-github-copilot"
         "vscode-extension-github-copilot-chat"
         "vscode-extension-MS-python-vscode-pylance"
+        "vscode-extension-mhutchie-git-graph"
+        "vscode-extension-ms-vscode-cpptools"
         "steam"
         "steam-original"
         "steam-unwrapped"
         "steam-run"
         "reaper"
-        "vscode-extension-mhutchie-git-graph"
       ];
 
       # Define the pkgs and unstable pkgs with the allowed unfree pkgs using the predicate
