@@ -13,6 +13,7 @@
     ./modules/gnome.nix
     ./modules/sensible-vscode.nix
     ./modules/lazy-nvim.nix
+    ./modules/kitty.nix
   ];
 
   home.username = "dylan";
@@ -35,7 +36,6 @@
       jabref
       reaper
       libcgroup
-      tmux
     ])
     ++ (with pkgs-unstable; [
       # Unstable packages

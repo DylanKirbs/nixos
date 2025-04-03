@@ -57,13 +57,13 @@
         { "nvim-lua/plenary.nvim" },  -- Dependency for many plugins
 
         -- UI Improvements
-        { "folke/tokyonight.nvim" },  -- Colorscheme
+        { "UtkarshVerma/molokai.nvim" },  -- Colorscheme
         {
           "nvim-lualine/lualine.nvim",  -- Status line
           dependencies = { "nvim-tree/nvim-web-devicons" },
           config = function()
             require("lualine").setup({
-              options = { theme = "tokyonight" }
+              options = { theme = "molokai" }
             })
           end
         },
@@ -162,12 +162,13 @@
       })
 
       -- Set colorscheme after plugins are loaded
-      vim.cmd("colorscheme tokyonight")
+      vim.cmd("colorscheme molokai")
     '';
   };
 
   # Ensure some dependencies are available
   home.packages = with pkgs; [
+    nerdfonts
     ripgrep
     fd
     nodejs
