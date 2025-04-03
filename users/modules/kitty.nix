@@ -36,9 +36,6 @@
     bold_font auto
     italic_font auto
     bold_italic_font auto
-
-    symbol_map U+E000-U+F8FF "FiraCode Nerd Font"
-
    '';
   };
 }

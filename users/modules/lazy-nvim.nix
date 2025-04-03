@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  pkgs-unstable,
   ...
 }:
 
@@ -12,8 +13,10 @@
     vimAlias = true;
     defaultEditor = lib.mkDefault true;
 
+    package = pkgs-unstable.neovim-unwrapped;
+
     # Install Lazy.nvim automatically
-    plugins = with pkgs.vimPlugins; [
+    plugins = with pkgs-unstable.vimPlugins; [
       lazy-nvim # This installs Lazy, but we still need to configure it
     ];
 
@@ -32,6 +35,9 @@
         })
       end
       vim.opt.rtp:prepend(lazypath)
+
+      vim.opt.runtimepath:append("~/.local/share/nvim/site")
+
 
       -- Set up options before loading plugins
       vim.g.mapleader = " "
@@ -95,7 +101,14 @@
             -- Setup language servers here
             lspconfig.pyright.setup({ on_attach = on_attach })
             lspconfig.rust_analyzer.setup({ on_attach = on_attach })
-            lspconfig["typescript-tools"].setup({ on_attach = on_attach })
+          end
+        },
+
+        {
+          "pmizio/typescript-tools.nvim",
+          dependencies = { "nvim-lua/plenary.nvim" },
+          config = function()
+            require("typescript-tools").setup({ on_attach = on_attach })
           end
         },
 
@@ -140,7 +153,7 @@
           build = ":TSUpdate",
           config = function()
             require("nvim-treesitter.configs").setup({
-              ensure_installed = { "lua", "vim", "vimdoc", "python", "rust", "javascript", "typescript" },
+              ensure_installed = { "c", "lua", "vim", "vimdoc", "python", "rust", "javascript", "typescript", "query" },
               highlight = { enable = true },
               indent = { enable = true },
             })
