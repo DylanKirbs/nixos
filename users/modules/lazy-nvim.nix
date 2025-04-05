@@ -57,6 +57,27 @@
       vim.opt.expandtab = true
       vim.opt.termguicolors = true
 
+      -- Command completion
+      vim.opt.wildmenu = true
+      vim.opt.wildmode = "list:longest"
+      vim.opt.wildignore = {
+        "*.docx", "*.jpg", "*.png", "*.gif", "*.pdf", "*.pyc", 
+        "*.exe", "*.flv", "*.img", "*.xlsx"
+      }
+
+      -- Backup and history settings
+      vim.opt.history = 1000
+
+      -- Persistent undo settings
+      local undodir = vim.fn.stdpath("data") .. "/undodir"
+      -- Create the directory if it doesn't exist
+      if vim.fn.isdirectory(undodir) == 0 then
+        vim.fn.mkdir(undodir, "p")
+      end
+      vim.opt.undodir = undodir
+      vim.opt.undofile = true
+      vim.opt.undoreload = 10000
+
       -- Load Lazy and setup plugins
       require("lazy").setup({
         -- Essential plugins
@@ -172,6 +193,99 @@
         { "tpope/vim-commentary" },  -- Easy commenting
         { "tpope/vim-surround" },    -- Easy surrounding
         { "windwp/nvim-autopairs" }, -- Auto pair brackets
+
+        -- Enhanced LSP UI
+        {
+        "nvim-lua/lsp-status.nvim",
+        "glepnir/lspsaga.nvim",
+        config = function()
+          require("lspsaga").setup({
+            lightbulb = {
+              enable = true,
+              enable_in_insert = true,
+              sign = true,
+            },
+            code_action = {
+              show_server_name = true,
+            },
+            finder = {
+              keys = {
+                edit = {"o", "<CR>"},
+              },
+            },
+          })
+          -- Key mappings for LSP saga
+          vim.keymap.set("n", "gh", "<cmd>Lspsaga lsp_finder<CR>")
+          vim.keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>")
+          vim.keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>")
+          vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>")
+        end
+      },
+
+      -- Treesitter context for macros and functions
+      {
+        "nvim-treesitter/nvim-treesitter-context",
+        config = function()
+          require("treesitter-context").setup({
+            enable = true,
+            max_lines = 0,
+            trim_scope = 'outer',
+          })
+        end
+      },
+
+      -- Enhanced symbols outline
+      {
+        "simrat39/symbols-outline.nvim",
+        config = function()
+          require("symbols-outline").setup()
+          vim.keymap.set("n", "<leader>so", "<cmd>SymbolsOutline<CR>")
+        end
+      },
+
+
+      -- C lang configs
+      local nvim_lsp = require('lspconfig')
+
+      -- Setup for clangd
+      nvim_lsp.clangd.setup {
+        cmd = {
+          "clangd",
+          "--background-index",
+          "--suggest-missing-includes",
+          "--clang-tidy",
+          "--header-insertion=iwyu",
+          "--completion-style=detailed",
+          "--function-arg-placeholders",
+          "--fallback-style=llvm"
+        },
+        on_attach = function(client, bufnr)
+          -- Enable hover documentation
+          vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', {noremap = true})
+
+          -- Go to definition
+          vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', {noremap = true})
+
+          -- Show references
+          vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', {noremap = true})
+
+          -- Show diagnostics on hover
+          vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', {noremap = true})
+
+          -- Navigate between diagnostics
+          vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', {noremap = true})
+          vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', {noremap = true})
+
+          -- Enable inlay hints (for parameter names and types)
+          if client.server_capabilities.inlayHintProvider then
+            vim.lsp.inlay_hint.enable(bufnr, true)
+          end
+        end,
+        flags = {
+          debounce_text_changes = 150,
+        }
+      }
+
       })
 
       -- Set colorscheme after plugins are loaded
@@ -185,8 +299,8 @@
     ripgrep
     fd
     nodejs
-    gcc
     zig
     cl
+    clang-tools
   ];
 }
