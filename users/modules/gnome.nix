@@ -38,7 +38,7 @@
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
       name = "Open Console";
-      command = "kgx";
+      command = "kitty";
       binding = "<Ctrl><Alt>t";
     };
   };
