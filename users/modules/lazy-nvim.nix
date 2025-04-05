@@ -58,6 +58,18 @@
       vim.opt.expandtab = true
       vim.opt.termguicolors = true
 
+      -- Add ruler 
+      vim.opt.colorcolumn = "81,121"
+
+      -- Highlight characters beyond 120 in red
+      vim.api.nvim_set_hl(0, "OverLength", { fg = "#FF0000", bg = "none" })
+      vim.api.nvim_create_autocmd({ "BufWinEnter", "BufEnter", "InsertLeave" }, {
+        pattern = "*",
+        callback = function()
+          vim.fn.matchadd("OverLength", "\\%>120v.\\+", 120)
+        end,
+      })
+
       -- Command completion
       vim.opt.wildmenu = true
       vim.opt.wildmode = "list:longest"
