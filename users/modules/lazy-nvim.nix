@@ -210,6 +210,43 @@
                   end
               },
               {
+                "folke/trouble.nvim",
+                opts = {}, -- for default options, refer to the configuration section for custom setup.
+                cmd = "Trouble",
+                keys = {
+                  {
+                    "<leader>xx",
+                    "<cmd>Trouble diagnostics toggle<cr>",
+                    desc = "Diagnostics (Trouble)",
+                  },
+                  {
+                    "<leader>xX",
+                    "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+                    desc = "Buffer Diagnostics (Trouble)",
+                  },
+                  {
+                    "<leader>cs",
+                    "<cmd>Trouble symbols toggle focus=false<cr>",
+                    desc = "Symbols (Trouble)",
+                  },
+                  {
+                    "<leader>cl",
+                    "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+                    desc = "LSP Definitions / references / ... (Trouble)",
+                  },
+                  {
+                    "<leader>xL",
+                    "<cmd>Trouble loclist toggle<cr>",
+                    desc = "Location List (Trouble)",
+                  },
+                  {
+                    "<leader>xQ",
+                    "<cmd>Trouble qflist toggle<cr>",
+                    desc = "Quickfix List (Trouble)",
+                  },
+                },
+              },
+              {
                   "pmizio/typescript-tools.nvim", -- TS Tools
                   dependencies = {"nvim-lua/plenary.nvim"},
                   config = function()
@@ -339,7 +376,29 @@
                       vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>")
                   end
               }
-          }
+          },
+
+          {
+              "nvimtools/none-ls.nvim", -- null-ls fork that's maintained
+                dependencies = {"nvim-lua/plenary.nvim"},
+                config = function()
+                    local null_ls = require("null-ls")
+                    null_ls.setup({
+                        sources = {
+                            -- Spelling / Meta
+                            null_ls.builtins.diagnostics.codespell,
+                            null_ls.builtins.diagnostics.todo_comments,
+                            -- C/C++
+                            null_ls.builtins.diagnostics.cppcheck,
+                            null_ls.builtins.formatting.clang_format,
+                            -- Nix
+                            null_ls.builtins.diagnostics.deadnix,
+                        }
+                    })
+                end
+            }
+
+      -- End of plugins
       )
 
       -- Set colorscheme after plugins are loaded
@@ -354,5 +413,9 @@
     nodejs
     zig
     clang-tools
+
+    codespell
+    cppcheck
+    deadnix
   ];
 }
