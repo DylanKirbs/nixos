@@ -32,17 +32,17 @@
       color15               #ffffff
       selection_foreground #121212
 
-      font_family "FiraCode Nerd Font"
+      font_family FiraCodeNerdFontMono-Regular
       bold_font auto
       italic_font auto
       bold_italic_font auto
+      disable_ligatures never
     '';
   };
 
   # Dependencies
+  fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
-    # (nerdfonts.override { fonts = [ "FiraCode" ]; })
-    # fira-code
-    nerdfonts
+    (nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
 }
