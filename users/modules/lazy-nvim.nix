@@ -182,7 +182,7 @@
                           )
                           -- Enable inlay hints (for parameter names and types)
                           if client.server_capabilities.inlayHintProvider then
-                              vim.lsp.inlay_hint.enable(bufnr, true)
+                              vim.lsp.inlay_hint.enable(true)
                           end
                       end
 
