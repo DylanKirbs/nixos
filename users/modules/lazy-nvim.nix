@@ -349,7 +349,6 @@
 
   # Ensure some dependencies are available
   home.packages = with pkgs; [
-    nerdfonts
     ripgrep
     fd
     nodejs

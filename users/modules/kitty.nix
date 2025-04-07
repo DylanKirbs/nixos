@@ -38,4 +38,11 @@
       bold_italic_font auto
     '';
   };
+
+  # Dependencies
+  home.packages = with pkgs; [
+    # (nerdfonts.override { fonts = [ "FiraCode" ]; })
+    # fira-code
+    nerdfonts
+  ];
 }
