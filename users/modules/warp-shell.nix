@@ -7,7 +7,7 @@ in
 {
   home.file."nix-shells" = {
     source = ../../nix-shells;
-    target = "$HOME/nix-shells";
+    target = "nix-shells";
   };
 
   home.packages = [
