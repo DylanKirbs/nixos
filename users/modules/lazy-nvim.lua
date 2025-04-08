@@ -354,10 +354,18 @@ require("lazy").setup(
     },
     {
         "nvimtools/none-ls.nvim", -- null-ls fork that's maintained
+        dependencies = {
+          "lukas-reineke/lsp-format.nvim",
+        },
         config = function()
             local null_ls = require("null-ls")
-            null_ls.setup(
-                {
+            local lsp_format = require("lsp-format")
+
+            lsp_format.setup {
+              autosave = true;
+            }
+
+            null_ls.setup({
                     sources = {
                         -- Spelling / Meta
                         null_ls.builtins.diagnostics.codespell,
@@ -366,10 +374,16 @@ require("lazy").setup(
                         null_ls.builtins.diagnostics.cppcheck,
                         null_ls.builtins.formatting.clang_format,
                         -- Nix
-                        null_ls.builtins.diagnostics.deadnix
-                    }
-                }
-            )
+                        null_ls.builtins.diagnostics.deadnix,
+                        -- Lua
+                        null_ls.builtins.formatting.stylua,
+                        -- General static analysis
+                        null_ls.builtins.diagnostics.semgrep.with({
+                          extra_args = { "--config", "p/semgrep" }
+                        }),
+                    },
+                    on_attach = lsp_format.on_attach
+                })
         end
     }
 

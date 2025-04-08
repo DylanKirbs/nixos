@@ -16,7 +16,7 @@
     package = pkgs-unstable.neovim-unwrapped;
 
     # Lua configuration for Lazy.nvim
-    extraLuaConfig = builtins.readFile ./init-lazy-nvim.lua;
+    extraLuaConfig = builtins.readFile ./lazy-nvim.lua;
   };
 
   # Ensure some dependencies are available
@@ -30,5 +30,7 @@
     codespell
     cppcheck
     deadnix
+    stylua
+    semgrep
   ];
 }
