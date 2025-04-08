@@ -5,6 +5,8 @@ set -euo pipefail
 
 if [ "$#" -lt 2 ]; then
   echo "Usage: nixwarp <shell-type> <directory>"
+  echo "  The shell must be present as ~/nix-shells/<shell-type>-shell.nix"
+  echo "  Specifying a <shell-type> of . indicates that the shell in the directory must be used"
   exit 1
 fi
 
