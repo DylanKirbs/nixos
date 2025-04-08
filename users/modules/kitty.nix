@@ -32,7 +32,7 @@
       color15               #ffffff
       selection_foreground #121212
 
-      font_family FiraCodeNerdFontMono-Regular
+      font_family FiraCodeNerdFontMono
       bold_font auto
       italic_font auto
       bold_italic_font auto

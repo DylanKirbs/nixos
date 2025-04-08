@@ -14,6 +14,7 @@
     ./modules/sensible-vscode.nix
     ./modules/lazy-nvim.nix
     ./modules/kitty.nix
+    ./modules/warp-shell.nix
   ];
 
   home.username = "dylan";
