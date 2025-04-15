@@ -68,7 +68,7 @@
         }
       }
 
-      alias cd = z
+      alias cd = zh
     '';
   };
 

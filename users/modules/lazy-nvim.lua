@@ -164,7 +164,7 @@ require("lazy").setup(
 
                 -- Setup language servers here
                 lspconfig.pyright.setup({on_attach = on_attach})
-                lspconfig.rust_analyzer.setup({on_attach = on_attach})
+                lspconfig.jdtls.setup({on_attach = on_attach})
 
                 -- Setup for clangd
                 lspconfig.clangd.setup {
@@ -185,6 +185,7 @@ require("lazy").setup(
                 }
             end
         },
+
         {
             "folke/trouble.nvim",
             opts = {}, -- for default options, refer to the configuration section for custom setup.
@@ -283,6 +284,7 @@ require("lazy").setup(
                             "python",
                             "rust",
                             "javascript",
+                            "java",
                             "typescript",
                             "query"
                         },

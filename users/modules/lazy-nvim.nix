@@ -26,7 +26,8 @@
     nodejs
     zig
     clang-tools
-
+    pyright
+    jdt-language-server
     codespell
     cppcheck
     deadnix
