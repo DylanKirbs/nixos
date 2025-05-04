@@ -30,13 +30,13 @@
       python312Packages.pygments
       jdk21
       maven
-      helix
       texliveFull
       texlivePackages.pygmentex
       lutris
       jabref
       reaper
-      libcgroup
+      obsidian
+      termpdfpy
     ])
     ++ (with pkgs-unstable; [
       # Unstable packages

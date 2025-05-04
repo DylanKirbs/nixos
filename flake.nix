@@ -28,6 +28,7 @@
         "steam-unwrapped"
         "steam-run"
         "reaper"
+        "obsidian"
       ];
 
       # Define the pkgs and unstable pkgs with the allowed unfree pkgs using the predicate

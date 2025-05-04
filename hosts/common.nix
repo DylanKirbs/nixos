@@ -41,7 +41,7 @@
       file
       tree
       wget
-      htop
+      btop
       inetutils
 
       nixfmt-rfc-style

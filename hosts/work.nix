@@ -19,4 +19,8 @@
     ++ (with pkgs-unstable; [
       # Unstable packages
     ]);
+
+  virtualisation.virtualbox.host.enable = true;
+  users.extraGroups.vboxusers.members = [ "dylan" ];
+
 }
