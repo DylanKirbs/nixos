@@ -47,6 +47,8 @@
       nixfmt-rfc-style
       treefmt2
 
+      pkg-config
+      openssl
       gnupg
       pinentry-tty
 

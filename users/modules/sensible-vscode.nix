@@ -28,6 +28,8 @@
       github.copilot
       github.copilot-chat
 
+      valentjn.vscode-ltex
+
       # Themes + Icons
       vscode-icons-team.vscode-icons
 
@@ -35,6 +37,8 @@
       yzane.markdown-pdf
       yzhang.markdown-all-in-one
       james-yu.latex-workshop
+
+      tamasfe.even-better-toml
 
       # Python
       ms-python.python
@@ -56,6 +60,13 @@
       # Haskell & Other Functional / Schema Langs
       haskell.haskell
       justusadam.language-haskell
+
+      # Scala
+      scalameta.metals
+      scala-lang.scala
+
+      # Rust
+      rust-lang.rust-analyzer
     ];
   };
 }

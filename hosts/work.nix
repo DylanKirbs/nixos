@@ -15,6 +15,7 @@
   environment.systemPackages =
     (with pkgs; [
       # Stable packages
+      unzip
     ])
     ++ (with pkgs-unstable; [
       # Unstable packages
