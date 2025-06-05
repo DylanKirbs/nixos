@@ -58,12 +58,12 @@
       ms-vscode.cmake-tools
 
       # Haskell & Other Functional / Schema Langs
-      haskell.haskell
-      justusadam.language-haskell
+      # haskell.haskell
+      # justusadam.language-haskell
 
       # Scala
-      scalameta.metals
-      scala-lang.scala
+      # scalameta.metals
+      # scala-lang.scala
 
       # Rust
       rust-lang.rust-analyzer
