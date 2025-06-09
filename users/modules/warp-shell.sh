@@ -47,7 +47,7 @@ shell_file="$HOME/nix-shells/${shell_type}-shell.nix"
 if [ ! -f "$shell_file" ]; then
   # Find closest match
   best_match=""
-  lowest_distance="${#shell_type}" + 5
+  lowest_distance=$(("${#shell_type}" + 5))
 
   tmp1=$(mktemp /tmp/str1.XXXXXX) || exit 1
   tmp2=$(mktemp /tmp/str2.XXXXXX) || exit 1
@@ -59,7 +59,7 @@ if [ ! -f "$shell_file" ]; then
     echo -n "$shell_type" | sed -e "s/./&\n/g" | grep -v "^$" | sort > "$tmp1"
     echo -n "$shell" | sed -e "s/./&\n/g" | grep -v "^$" | sort > "$tmp2"
     common=$(comm -12 "$tmp1" "$tmp2" | wc -l)
-    total=$(($(cat /tmp/str1 | wc -l) + $(cat /tmp/str2 | wc -l)))
+    total=$(($(cat $tmp1 | wc -l) + $(cat $tmp2 | wc -l)))
     current_distance=$((total - 2 * common))
     
     if [[ $current_distance -lt $lowest_distance ]]; then
