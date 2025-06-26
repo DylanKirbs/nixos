@@ -37,6 +37,7 @@
       reaper
       obsidian
       termpdfpy
+      gh
     ])
     ++ (with pkgs-unstable; [
       # Unstable packages

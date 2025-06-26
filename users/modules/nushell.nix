@@ -69,6 +69,7 @@
       }
 
       alias cd = zh
+      alias mv = mv -p
     '';
   };
 
