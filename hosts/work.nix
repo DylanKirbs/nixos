@@ -24,4 +24,23 @@
   virtualisation.virtualbox.host.enable = true;
   users.extraGroups.vboxusers.members = [ "dylan" ];
 
+  services.openssh = {
+    enable = true;
+    Ports = [ 5432 ];
+    settings = {
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+      PermitRootLogin = "no";
+      AllowUsers = [ "dylan" ]
+    };
+  };
+  services.fail2ban.enable = true;
+  services.endlessh = {
+    enable = true;
+    port = 22;
+    openFirewall = true;
+  };
+
+
+
 }
