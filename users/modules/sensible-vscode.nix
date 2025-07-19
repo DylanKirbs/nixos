@@ -22,6 +22,7 @@
       formulahendry.code-runner
       arrterian.nix-env-selector
       usernamehw.errorlens
+      naumovs.color-highlight
 
       # LSP + Completion
       visualstudioexptteam.vscodeintellicode
@@ -32,6 +33,9 @@
 
       # Themes + Icons
       vscode-icons-team.vscode-icons
+
+      # Web Dev
+      bradlc.vscode-tailwindcss
 
       # PDF + Markdown + Latex
       yzane.markdown-pdf
