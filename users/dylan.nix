@@ -23,17 +23,26 @@
   home.packages =
     (with pkgs; [
       # Stable packages
+      
+      # Python
       python312
       python312Packages.pip
       python312Packages.numpy
       python312Packages.pandas
       python312Packages.pygments
+      python312Packages.jupyter-core
+
+      # Java
       jdk21
       maven
+
+      # Tex
       texliveFull
       texlivePackages.pygmentex
-      lutris
       jabref
+
+      # Misc
+      lutris
       reaper
       obsidian
       termpdfpy
