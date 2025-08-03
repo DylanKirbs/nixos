@@ -23,7 +23,6 @@
   home.packages =
     (with pkgs; [
       # Stable packages
-
       (python3.withPackages (
         ps: with ps; [
 
@@ -41,12 +40,17 @@
         ]
       ))
 
+      # Java
       jdk21
       maven
+
+      # Tex
       texliveFull
       texlivePackages.pygmentex
-      lutris
       jabref
+
+      # Misc
+      lutris
       reaper
       obsidian
       termpdfpy

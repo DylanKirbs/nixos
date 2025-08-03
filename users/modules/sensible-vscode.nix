@@ -51,6 +51,13 @@
       ms-python.black-formatter
       njpwerner.autodocstring
 
+      # Jupyter
+      ms-toolsai.jupyter
+      ms-toolsai.jupyter-keymap
+      ms-toolsai.vscode-jupyter-slideshow
+      ms-toolsai.vscode-jupyter-cell-tags
+      ms-toolsai.jupyter-renderers
+
       # Java
       redhat.java
       vscjava.vscode-java-debug
