@@ -26,12 +26,12 @@
 
   services.openssh = {
     enable = true;
-    Ports = [ 5432 ];
+    ports = [ 5432 ];
     settings = {
       PasswordAuthentication = false;
       KbdInteractiveAuthentication = false;
       PermitRootLogin = "no";
-      AllowUsers = [ "dylan" ]
+      AllowUsers = [ "dylan" ];
     };
   };
   services.fail2ban.enable = true;
@@ -40,7 +40,4 @@
     port = 22;
     openFirewall = true;
   };
-
-
-
 }

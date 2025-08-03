@@ -23,11 +23,24 @@
   home.packages =
     (with pkgs; [
       # Stable packages
-      python312
-      python312Packages.pip
-      python312Packages.numpy
-      python312Packages.pandas
-      python312Packages.pygments
+
+      (python3.withPackages (
+        ps: with ps; [
+
+          # Some sensible default packages
+          numpy
+          pandas
+
+          # ipy
+          jupyter
+          ipython
+          ipykernel
+
+          # TeX stuff
+          pygments
+        ]
+      ))
+
       jdk21
       maven
       texliveFull
@@ -38,6 +51,7 @@
       obsidian
       termpdfpy
       gh
+      sshfs
     ])
     ++ (with pkgs-unstable; [
       # Unstable packages

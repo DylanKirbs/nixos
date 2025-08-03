@@ -1,6 +1,8 @@
 let
-  stable = import <nixpkgs> {};
-  unstable = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz") {};
+  stable = import <nixpkgs> { };
+  unstable =
+    import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz")
+      { };
 in
 
 with stable;

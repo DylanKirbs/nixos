@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   scriptName = "warp-shell";
@@ -10,8 +15,5 @@ in
     target = "nix-shells";
   };
 
-  home.packages = [
-    (pkgs.writeScriptBin scriptName scriptText)
-  ];
+  home.packages = [ (pkgs.writeScriptBin scriptName scriptText) ];
 }
-
