@@ -25,15 +25,10 @@
       # Stable packages
       (python3.withPackages (
         ps: with ps; [
-
           # Some sensible default packages
           numpy
           pandas
-
-          # ipy
-          jupyter
-          ipython
-          ipykernel
+          matplotlib
 
           # TeX stuff
           pygments
