@@ -23,7 +23,7 @@
   home.packages =
     (with pkgs; [
       # Stable packages
-      (python3.withPackages (
+      (python3Full.withPackages (
         ps: with ps; [
           # Some sensible default packages
           numpy
@@ -51,6 +51,7 @@
       termpdfpy
       gh
       sshfs
+      unzip
     ])
     ++ (with pkgs-unstable; [
       # Unstable packages
