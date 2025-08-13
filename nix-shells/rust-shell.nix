@@ -12,9 +12,14 @@ mkShell {
     pkg-config
     openssl
     gcc
+    clang
     rustup
     man-pages
     man-pages-posix
+    libgit2
+    llvm
+    rustc.llvmPackages.llvm
+    grcov
   ];
 
   shellHook = ''

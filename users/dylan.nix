@@ -30,6 +30,12 @@
           pandas
           matplotlib
 
+          # Language Server
+          lsprotocol
+          python-lsp-server
+          python-lsp-black
+          pyls-isort
+
           # TeX stuff
           pygments
         ]

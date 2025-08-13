@@ -23,6 +23,7 @@
       arrterian.nix-env-selector
       usernamehw.errorlens
       naumovs.color-highlight
+      # fuzionix.devtool-plus
 
       # LSP + Completion
       visualstudioexptteam.vscodeintellicode
