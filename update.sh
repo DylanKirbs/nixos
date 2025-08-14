@@ -1,0 +1,1 @@
+sudo nix run nixpkgs/nixos-25.05#nixos-rebuild -- switch --flake .#dylan@home
