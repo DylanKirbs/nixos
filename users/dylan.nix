@@ -23,23 +23,16 @@
   home.packages =
     (with pkgs; [
       # Stable packages
-      (python3Full.withPackages (
-        ps: with ps; [
-          # Some sensible default packages
-          numpy
-          pandas
-          matplotlib
-
-          # Language Server
-          lsprotocol
-          python-lsp-server
-          python-lsp-black
-          pyls-isort
-
-          # TeX stuff
-          pygments
-        ]
-      ))
+      python312Full
+      python312Packages.numpy
+      python312Packages.pandas
+      python312Packages.matplotlib
+      python312Packages.pygments
+      python312Packages.python-lsp-server
+      python312Packages.python-lsp-black
+      python312Packages.pyls-isort
+      python312Packages.pylsp-mypy
+      python312Packages.python-lsp-ruff
 
       # Java
       jdk21
