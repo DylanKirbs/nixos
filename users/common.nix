@@ -23,7 +23,7 @@
     enable = true;
     defaultCacheTtl = 600;
     maxCacheTtl = 7200;
-    pinentryPackage = pkgs.pinentry-tty;
+    pinentry.package = pkgs.pinentry-tty;
     extraConfig = ''
       allow-loopback-pinentry
     '';

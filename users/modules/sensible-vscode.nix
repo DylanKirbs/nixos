@@ -12,7 +12,7 @@
     package = pkgs-unstable.vscode;
     mutableExtensionsDir = false;
 
-    extensions = with pkgs-unstable.vscode-extensions; [
+    profiles.default.extensions = with pkgs-unstable.vscode-extensions; [
       # Utilities
       streetsidesoftware.code-spell-checker
       mhutchie.git-graph
@@ -78,7 +78,7 @@
       # scala-lang.scala
 
       # Rust
-      rust-lang.rust-analyzer
+      # rust-lang.rust-analyzer
     ];
   };
 }
