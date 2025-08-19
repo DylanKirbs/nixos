@@ -33,6 +33,9 @@
 
   services.zerotierone.enable = true;
 
+  programs.nix-ld.enable = true;
+  programs.nix-ld.package = pkgs-unstable.nix-ld-rs;
+
   # Packages
   # nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) allowed-unfree-pkgs;
   environment.systemPackages =

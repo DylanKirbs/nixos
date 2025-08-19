@@ -17,6 +17,7 @@
     let
       system = "x86_64-linux";
       allowed-unfree-pkgs = [
+        "code"
         "vscode"
         "vscode-extension-github-copilot"
         "vscode-extension-github-copilot-chat"

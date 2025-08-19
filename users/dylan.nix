@@ -23,17 +23,24 @@
   home.packages =
     (with pkgs; [
       # Stable packages
-      python312Full
-      python312Packages.numpy
-      python312Packages.pandas
-      python312Packages.matplotlib
-      python312Packages.pygments
-      python312Packages.python-lsp-server
-      python312Packages.python-lsp-black
-      python312Packages.pyls-isort
-      python312Packages.pylsp-mypy
-      python312Packages.python-lsp-ruff
+      # Python
+      (python312.withPackages (
+        ps: with ps; [
+          # Nice to haves
+          numpy
+          pandas
+          matplotlib
+          pygments
+          tqdm
 
+          # LSP stuff
+          python-lsp-server
+          python-lsp-black
+          pyls-isort
+          pylsp-mypy
+          python-lsp-ruff
+        ]
+      ))
       # Java
       jdk21
       maven

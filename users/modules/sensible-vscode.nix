@@ -78,7 +78,7 @@
       # scala-lang.scala
 
       # Rust
-      # rust-lang.rust-analyzer
+      rust-lang.rust-analyzer
     ];
   };
 }

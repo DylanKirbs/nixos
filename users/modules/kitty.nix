@@ -32,7 +32,7 @@
       color15               #ffffff
       selection_foreground #121212
 
-      font_family FiraCodeNerdFontMono
+      font_family AswaitaMonoNerdFontMono #FiraCodeNerdFontMono
       bold_font auto
       italic_font auto
       bold_italic_font auto
@@ -42,5 +42,5 @@
 
   # Dependencies
   fonts.fontconfig.enable = true;
-  home.packages = with pkgs; [ nerd-fonts.fira-code ];
+  home.packages = with pkgs; [ nerd-fonts.adwaita-mono ];
 }
