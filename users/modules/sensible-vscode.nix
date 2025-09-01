@@ -24,6 +24,7 @@
       usernamehw.errorlens
       naumovs.color-highlight
       # fuzionix.devtool-plus
+      ms-vscode-remote.remote-ssh
 
       # LSP + Completion
       visualstudioexptteam.vscodeintellicode
