@@ -47,7 +47,7 @@
       tamasfe.even-better-toml
 
       # Python
-      ms-python.python
+      pkgs.vscode-extensions.ms-python.python
       ms-python.vscode-pylance
       ms-python.isort
       ms-python.black-formatter
