@@ -34,11 +34,7 @@
         "zerotierone"
       ];
 
-      # Define the pkgs and unstable pkgs with the allowed unfree pkgs using the predicate
-      pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) allowed-unfree-pkgs;
-      };
+      # Define unstable pkgs with the allowed unfree pkgs using the predicate
       pkgs-unstable = import nixpkgs-unstable {
         inherit system;
         config.allowUnfreePredicate =
@@ -82,7 +78,7 @@
       );
 
       # Generate all user-host combinations
-      userHostCombinations = pkgs.lib.cartesianProduct {
+      userHostCombinations = nixpkgs.lib.cartesianProduct {
         user = builtins.attrNames users;
         host = builtins.attrNames hosts;
       };
@@ -97,20 +93,23 @@
           inherit system;
           specialArgs = {
             inherit
-              pkgs
               pkgs-unstable
               allowed-unfree-pkgs
               user
               ;
           };
           modules = [
+            # Configure nixpkgs within the NixOS system
+            {
+              nixpkgs.config.allowUnfreePredicate = 
+                pkg: builtins.elem (nixpkgs.lib.getName pkg) allowed-unfree-pkgs;
+            }
             hosts.${host}
             home-manager.nixosModules.home-manager
             {
               home-manager.users.${user} = users.${user};
               home-manager.extraSpecialArgs = {
                 inherit
-                  pkgs
                   pkgs-unstable
                   allowed-unfree-pkgs
                   user

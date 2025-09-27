@@ -115,8 +115,6 @@ require("lazy").setup(
                     -- Enable completion triggered by <c-x><c-o>
                     vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-                    -- Enable hover documentation
-                    vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", {noremap = true})
                     -- Go to definition
                     vim.api.nvim_buf_set_keymap(
                         bufnr,
@@ -165,6 +163,21 @@ require("lazy").setup(
                 -- Setup language servers here
                 lspconfig.pyright.setup({on_attach = on_attach})
                 lspconfig.jdtls.setup({on_attach = on_attach})
+                
+                -- Rust analyzer setup
+                lspconfig.rust_analyzer.setup({
+                    on_attach = on_attach,
+                    settings = {
+                        ["rust-analyzer"] = {
+                            cargo = {
+                                allFeatures = true,
+                            },
+                            checkOnSave = {
+                                command = "cargo clippy",
+                            },
+                        },
+                    },
+                })
 
                 -- Setup for clangd
                 lspconfig.clangd.setup {
@@ -175,13 +188,9 @@ require("lazy").setup(
                         "--clang-tidy",
                         "--header-insertion=iwyu",
                         "--completion-style=detailed",
-                        "--function-arg-placeholders",
                         "--fallback-style=llvm"
                     },
                     on_attach = on_attach,
-                    flags = {
-                        debounce_text_changes = 150
-                    }
                 }
             end
         },
@@ -313,6 +322,106 @@ require("lazy").setup(
                 vim.keymap.set("n", "<leader>so", "<cmd>SymbolsOutline<CR>")
             end
         },
+        -- Rust development
+        {
+            "mrcjkb/rustaceanvim",
+            version = "^4", -- Recommended
+            lazy = false, -- This plugin is already lazy
+            ft = { "rust" },
+            config = function()
+                vim.g.rustaceanvim = {
+                    -- Plugin configuration
+                    tools = {
+                        hover_actions = {
+                            auto_focus = true,
+                        },
+                    },
+                    -- LSP configuration
+                    server = {
+                        on_attach = function(client, bufnr)
+                            -- Set keybindings for Rust-specific features
+                            vim.keymap.set("n", "<leader>ca", function()
+                                vim.cmd.RustLsp('codeAction')
+                            end, { desc = "Code Action", buffer = bufnr })
+                            vim.keymap.set("n", "<leader>dr", function()
+                                vim.cmd.RustLsp('debuggables')
+                            end, { desc = "Rust Debuggables", buffer = bufnr })
+                            vim.keymap.set("n", "<leader>rt", function()
+                                vim.cmd.RustLsp('testables')
+                            end, { desc = "Rust Testables", buffer = bufnr })
+                            vim.keymap.set("n", "<leader>rr", function()
+                                vim.cmd.RustLsp('runnables')
+                            end, { desc = "Rust Runnables", buffer = bufnr })
+                        end,
+                        default_settings = {
+                            -- rust-analyzer language server configuration
+                            ['rust-analyzer'] = {
+                                cargo = {
+                                    allFeatures = true,
+                                    loadOutDirsFromCheck = true,
+                                    runBuildScripts = true,
+                                },
+                                -- Add clippy lints for Rust.
+                                checkOnSave = {
+                                    allFeatures = true,
+                                    command = "cargo clippy",
+                                    extraArgs = { "--no-deps" },
+                                },
+                                procMacro = {
+                                    enable = true,
+                                    ignored = {
+                                        ["async-trait"] = { "async_trait" },
+                                        ["napi-derive"] = { "napi" },
+                                        ["async-recursion"] = { "async_recursion" },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                }
+            end,
+        },
+        {
+            "nvim-neotest/neotest",
+            dependencies = {
+                "nvim-neotest/nvim-nio",
+                "nvim-lua/plenary.nvim",
+                "antoinemadec/FixCursorHold.nvim",
+                "nvim-treesitter/nvim-treesitter",
+                "rouge8/neotest-rust",
+            },
+            config = function()
+                require("neotest").setup({
+                    adapters = {
+                        require("neotest-rust") {
+                            args = { "--no-capture" },
+                            dap_adapter = "lldb",
+                        }
+                    },
+                })
+                
+                -- Test runner keybindings
+                vim.keymap.set("n", "<leader>tt", function()
+                    require("neotest").run.run()
+                end, { desc = "Run nearest test" })
+                
+                vim.keymap.set("n", "<leader>tf", function()
+                    require("neotest").run.run(vim.fn.expand("%"))
+                end, { desc = "Run tests in file" })
+                
+                vim.keymap.set("n", "<leader>ta", function()
+                    require("neotest").run.run(vim.fn.getcwd())
+                end, { desc = "Run all tests" })
+                
+                vim.keymap.set("n", "<leader>ts", function()
+                    require("neotest").summary.toggle()
+                end, { desc = "Toggle test summary" })
+                
+                vim.keymap.set("n", "<leader>to", function()
+                    require("neotest").output.open({ enter = true })
+                end, { desc = "Open test output" })
+            end,
+        },
         -- Git integration
         {
             "lewis6991/gitsigns.nvim",
@@ -323,7 +432,12 @@ require("lazy").setup(
         -- Quality of life improvements
         {"tpope/vim-commentary"}, -- Easy commenting
         {"tpope/vim-surround"}, -- Easy surrounding
-        {"windwp/nvim-autopairs"}, -- Auto pair brackets
+        {
+            "windwp/nvim-autopairs", -- Auto pair brackets
+            config = function()
+                require("nvim-autopairs").setup({})
+            end
+        },
         -- LSP
         {"nvim-lua/lsp-status.nvim"}, -- LSP UI
         {
@@ -352,10 +466,9 @@ require("lazy").setup(
                 vim.keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>")
                 vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>")
             end
-        }
-    },
-    {
-        "nvimtools/none-ls.nvim", -- null-ls fork that's maintained
+        },
+        {
+            "nvimtools/none-ls.nvim", -- null-ls fork that's maintained
         dependencies = {
           "lukas-reineke/lsp-format.nvim",
         },
@@ -375,6 +488,8 @@ require("lazy").setup(
                         -- C/C++
                         null_ls.builtins.diagnostics.cppcheck,
                         null_ls.builtins.formatting.clang_format,
+                        -- Rust
+                        null_ls.builtins.formatting.rustfmt,
                         -- Nix
                         null_ls.builtins.diagnostics.deadnix,
                         -- Lua
@@ -387,9 +502,9 @@ require("lazy").setup(
                     on_attach = lsp_format.on_attach
                 })
         end
+        }
+        -- End of plugins
     }
-
-    -- End of plugins
 )
 
 -- Set colorscheme after plugins are loaded

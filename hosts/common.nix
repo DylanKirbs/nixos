@@ -40,15 +40,18 @@
   # nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) allowed-unfree-pkgs;
   environment.systemPackages =
     (with pkgs; [
-      # Utils
+      # General
       vim
       git
       file
-      tree
       wget
       btop
       inetutils
+      tree
+      ripgrep
+      fd
 
+      # Nix Dev
       nixfmt-rfc-style
       treefmt
 
