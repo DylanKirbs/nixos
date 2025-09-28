@@ -45,6 +45,15 @@
       jdk21
       maven
 
+      # Rust/C
+      cargo
+      rustc
+      rust-analyzer
+      rustfmt
+      gcc
+      openssl
+      pkg-config
+
       # Tex
       texliveFull
       texlivePackages.pygmentex
@@ -65,6 +74,11 @@
       gimp-with-plugins
       weylus
     ]);
+
+
+  home.sessionVariables = {
+    PKG_CONFIG_PATH = lib.makeSearchPathOutput "dev" "lib/pkgconfig" [ pkgs.openssl ];
+  };
 
   programs.git = {
     enable = true;

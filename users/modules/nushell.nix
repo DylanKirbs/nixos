@@ -64,6 +64,9 @@
         uniq
       )
 
+      # Set PKG_CONFIG_PATH for development
+      $env.PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig"
+
       # Zoxide configuration
       ${pkgs.zoxide}/bin/zoxide init nushell --cmd z | save -f ~/.zoxide.nu
       source ~/.zoxide.nu

@@ -18,6 +18,7 @@
       ripgrep
       rust-analyzer
       clang-tools
+      wl-clipboard
       cargo
       rustc
       rustfmt
