@@ -32,6 +32,8 @@
         "reaper"
         "obsidian"
         "zerotierone"
+        "aspell-dict-en-science" # contains copyrighted material
+        "aspell-dict-en-computers" # contains copyrighted material
       ];
 
       # Define unstable pkgs with the allowed unfree pkgs using the predicate

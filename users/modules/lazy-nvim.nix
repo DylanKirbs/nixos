@@ -30,6 +30,10 @@
       ghostscript
       mermaid-cli
       sqlite
+      aspell
+      aspellDicts.en
+      aspellDicts.en-computers
+      aspellDicts.en-science
     ];
 
     plugins = with pkgs.vimPlugins; [

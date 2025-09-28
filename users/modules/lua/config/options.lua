@@ -2,6 +2,11 @@
 -- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
 
+-- Spell checking configuration
+vim.opt.spell = true
+vim.opt.spelllang = { "en_gb" }
+vim.opt.spelloptions = "camel"
+
 -- Clipboard configuration for NixOS
 vim.opt.clipboard = "unnamedplus"
 
