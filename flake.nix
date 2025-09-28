@@ -101,7 +101,7 @@
           modules = [
             # Configure nixpkgs within the NixOS system
             {
-              nixpkgs.config.allowUnfreePredicate = 
+              nixpkgs.config.allowUnfreePredicate =
                 pkg: builtins.elem (nixpkgs.lib.getName pkg) allowed-unfree-pkgs;
             }
             hosts.${host}

@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   programs.neovim = {
@@ -8,34 +13,23 @@
     defaultEditor = lib.mkDefault true;
 
     extraPackages = with pkgs; [
-      # LazyVim
       lua-language-server
       stylua
-      # Telescope
       ripgrep
-      # Language servers
       rust-analyzer
       clang-tools
-      # Rust toolchain (required for rust-analyzer)
       cargo
       rustc
       rustfmt
-      clippy
-      # Clipboard support
-      wl-clipboard  # Wayland clipboard
-      xclip         # X11 clipboard (fallback)
-      # Hererocks/Luarocks support
       luarocks
-      # Tree-sitter, node, cc, lazygit, fzf
       tree-sitter
       nodejs
       gcc
       lazygit
       fzf
-      # Snacks.nvim dependencies
-      ghostscript   # for 'gs' command
-      mermaid-cli   # for 'mmdc' command
-      sqlite        # for snacks.picker
+      ghostscript
+      mermaid-cli
+      sqlite
     ];
 
     plugins = with pkgs.vimPlugins; [
@@ -89,18 +83,46 @@
           rustaceanvim
           vim-molokai-delroth
           snacks-nvim
-          { name = "LuaSnip"; path = luasnip; }
-          { name = "catppuccin"; path = catppuccin-nvim; }
-          { name = "mini.ai"; path = mini-nvim; }
-          { name = "mini.bufremove"; path = mini-nvim; }
-          { name = "mini.comment"; path = mini-nvim; }
-          { name = "mini.indentscope"; path = mini-nvim; }
-          { name = "mini.pairs"; path = mini-nvim; }
-          { name = "mini.surround"; path = mini-nvim; }
+          {
+            name = "LuaSnip";
+            path = luasnip;
+          }
+          {
+            name = "catppuccin";
+            path = catppuccin-nvim;
+          }
+          {
+            name = "mini.ai";
+            path = mini-nvim;
+          }
+          {
+            name = "mini.bufremove";
+            path = mini-nvim;
+          }
+          {
+            name = "mini.comment";
+            path = mini-nvim;
+          }
+          {
+            name = "mini.indentscope";
+            path = mini-nvim;
+          }
+          {
+            name = "mini.pairs";
+            path = mini-nvim;
+          }
+          {
+            name = "mini.surround";
+            path = mini-nvim;
+          }
         ];
-        mkEntryFromDrv = drv:
+        mkEntryFromDrv =
+          drv:
           if lib.isDerivation drv then
-            { name = "${lib.getName drv}"; path = drv; }
+            {
+              name = "${lib.getName drv}";
+              path = drv;
+            }
           else
             drv;
         lazyPath = pkgs.linkFarm "lazy-plugins" (builtins.map mkEntryFromDrv plugins);
@@ -128,42 +150,57 @@
             -- import/override with your plugins
             { import = "plugins" },
             -- treesitter handled by xdg.configFile."nvim/parser", put this line at the end of spec to clear ensure_installed
-            { "nvim-treesitter/nvim-treesitter", opts = { ensure_installed = {} } },
+            { "nvim-treesitter/nvim-treesitter", opts = { 
+              ensure_installed = {},
+              auto_install = false,
+              highlight = { enable = true },
+              indent = { enable = true },
+            }},
           },
         })
       '';
   };
 
   # https://github.com/nvim-treesitter/nvim-treesitter#i-get-query-error-invalid-node-type-at-position
-  xdg.configFile."nvim/parser".source =
+  # Create treesitter parsers directory and populate it
+  xdg.configFile =
     let
       parsers = pkgs.symlinkJoin {
         name = "treesitter-parsers";
-        paths = (pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins: with plugins; [
-          c
-          lua
-          rust
-          regex
-          bash
-          latex
-          markdown
-          markdown_inline
-          vim
-          vimdoc
-          python
-          javascript
-          typescript
-          json
-          yaml
-          toml
-          nix
-          html
-          css
-        ])).dependencies;
+        paths =
+          (pkgs.vimPlugins.nvim-treesitter.withPlugins (
+            plugins: with plugins; [
+              c
+              lua
+              rust
+              regex
+              bash
+              latex
+              markdown
+              markdown_inline
+              vim
+              vimdoc
+              python
+              javascript
+              typescript
+              json
+              yaml
+              toml
+              nix
+              html
+              css
+            ]
+          )).dependencies;
       };
+      parserFiles = builtins.listToAttrs (
+        map (name: {
+          name = "nvim/parser/${name}";
+          value = { source = "${parsers}/parser/${name}"; };
+        }) (builtins.attrNames (builtins.readDir "${parsers}/parser"))
+      );
     in
-    "${parsers}/parser";
-
-  # Normal LazyVim config here, see https://github.com/LazyVim/starter/tree/main/lua
-  xdg.configFile."nvim/lua".source = ./lua;
+    parserFiles // {
+      # Normal LazyVim config here, see https://github.com/LazyVim/starter/tree/main/lua
+      "nvim/lua".source = ./lua;
+    };
 }

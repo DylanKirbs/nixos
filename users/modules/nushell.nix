@@ -10,8 +10,29 @@
     enable = true;
 
     extraConfig = ''
+
+      # Carapace completer
       let carapace_completer = {|spans|
-          carapace $spans.0 nushell $spans | from json
+        # Handle alias expansion
+        let expanded_alias = scope aliases
+          | where name == $spans.0
+          | if ($in | length) > 0 { 
+              $in | first | get expansion 
+            } else { 
+              null 
+            }
+
+        let spans = if $expanded_alias != null {
+          $spans
+          | skip 1
+          | prepend ($expanded_alias | split row ' ' | first)
+        } else {
+          $spans
+        }
+
+        carapace $spans.0 nushell ...$spans
+        | from json
+        | if ($in | default [] | where value =~ '^-.*ERR$' | is-empty) { $in } else { null }
       }
 
       $env.config = {
@@ -35,20 +56,13 @@
         table: {
           mode: "rounded"
         },
-        hooks: {
-          pre_prompt: [{||
-            # do something before prompt displays
-          }]
-        }
       }
 
       $env.PATH = ($env.PATH? | default [] |
         split row (char esep) |
-        prepend ${lib.escapeShellArg "/home/dylan/.apps"} |
         append /usr/bin/env |
         uniq
       )
-
 
       # Zoxide configuration
       ${pkgs.zoxide}/bin/zoxide init nushell --cmd z | save -f ~/.zoxide.nu
@@ -63,7 +77,7 @@
           }
           z $selected
         } else {
-          # Normal zoxide behavior with arguments
+          # Normal zoxide behaviour with arguments
           z ...$rest
         }
       }
