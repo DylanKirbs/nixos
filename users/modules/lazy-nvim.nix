@@ -206,6 +206,6 @@
     in
     parserFiles // {
       # Normal LazyVim config here, see https://github.com/LazyVim/starter/tree/main/lua
-      "nvim/lua".source = ./lua;
+      "nvim/lua".source = ./nvim-lua;
     };
 }
