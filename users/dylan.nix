@@ -76,7 +76,6 @@
       weylus
     ]);
 
-
   home.sessionVariables = {
     PKG_CONFIG_PATH = lib.makeSearchPathOutput "dev" "lib/pkgconfig" [ pkgs.openssl ];
   };

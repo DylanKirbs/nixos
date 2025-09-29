@@ -1,6 +1,12 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  hostDisplayManager,
+  ...
+}:
 
-lib.mkIf (config.programs.hyprland.enable or false) {
+lib.mkIf (hostDisplayManager == "hyprland") {
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
@@ -9,7 +15,9 @@ lib.mkIf (config.programs.hyprland.enable or false) {
       exec-once = [
         "waybar"
         "dunst"
-        "swaybg -i ~/Pictures/Wallpapers/pixel-pusher-d.jxl"
+        "swaybg -i ~/Pictures/Wallpapers/pixel-pusher-d.jpg"
+        "swayidle -w"
+        "wl-paste --watch"
       ];
 
       input = {
@@ -28,25 +36,55 @@ lib.mkIf (config.programs.hyprland.enable or false) {
 
       decoration = {
         rounding = 5;
-        drop_shadow = true;
-        shadow_range = 4;
-        shadow_render_power = 3;
+        blur = {
+          size = 8;
+          passes = 2;
+        };
+        shadow = {
+          enabled = true;
+          range = 15;
+          render_power = 3;
+        };
       };
 
       animations.enabled = true;
 
       bind = [
-        "SUPER, Return, exec, kitty"
-        "SUPER, Q, killactive"
-        "SUPER, D, exec, rofi -show drun"
-        "SUPER, L, exec, swaylock"
-        "SUPER, F, fullscreen"
-        "SUPER, Space, togglefloating"
-        "SUPER, 1, workspace, 1"
-        "SUPER, 2, workspace, 2"
-        "SUPER, 3, workspace, 3"
-        "SUPER, 4, workspace, 4"
+        "SUPER, T, exec, kitty"
+        "SUPER, Q, killactive,"
+        "SUPER, M, exit,"
+        "SUPER, V, togglefloating,"
+        "SUPER, R, exec, rofi -show drun"
+        "SUPER, L, exec, swaylock-effects -f"
+        # Swap focus
+        "SUPER, left, movefocus, l"
+        "SUPER, right, movefocus, r"
+        "SUPER, up, movefocus, u"
+        "SUPER, down, movefocus, d"
+        # Swap workspace
+        "SUPER CONTROL, right, workspace, e+1"
+        "SUPER CONTROL, left, workspace, e-1"
+        # Move to workspace
+        "SUPER SHIFT, right, movetoworkspace, e+1"
+        "SUPER SHIFT, left, movetoworkspace, e-1"
+        # Misc
+        ", PRINT, exec, hyprshot -m region"
       ];
+
+      bindel = [
+        ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
+        ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+        ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+        ",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+        ",XF86MonBrightnessUp, exec, brightnessctl -e4 -n2 set 5%+"
+        ",XF86MonBrightnessDown, exec, brightnessctl -e4 -n2 set 5%-"
+      ];
+
+      windowrule = [
+        "float,class:^(kitty)$,title:^(kitty)$"
+        "suppressevent maximize, class:.*"
+      ];
+
     };
   };
 
@@ -56,6 +94,6 @@ lib.mkIf (config.programs.hyprland.enable or false) {
 
   home.packages = with pkgs; [
     swaybg
+    hyprshot
   ];
 }
-

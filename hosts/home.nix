@@ -7,9 +7,9 @@
   ...
 }:
 {
-  imports = [ 
-    ./common.nix 
-    ./display-managers/gnome.nix
+  imports = [
+    ./display-managers/hyprland.nix
+    ./common.nix
   ];
 
   # Host-specific settings

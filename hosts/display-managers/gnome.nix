@@ -1,6 +1,17 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
+  imports = [
+    ./common.nix
+  ];
+
+  hostDisplayManager = "gnome";
+
   # Enable X11 and GNOME
   services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;

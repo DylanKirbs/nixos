@@ -9,7 +9,9 @@
 }:
 {
   # Shared settings for all hosts
-  imports = [ /etc/nixos/hardware-configuration.nix ];
+  imports = [
+    /etc/nixos/hardware-configuration.nix
+  ];
 
   home-manager = {
     useGlobalPkgs = true;
@@ -17,6 +19,7 @@
     backupFileExtension = "backup";
     extraSpecialArgs = {
       inherit pkgs pkgs-unstable allowed-unfree-pkgs;
+      hostDisplayManager = config.hostDisplayManager;
     };
   };
 

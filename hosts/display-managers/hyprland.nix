@@ -1,6 +1,17 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
+  imports = [
+    ./common.nix
+  ];
+
+  hostDisplayManager = "hyprland";
+
   # Enable Hyprland
   programs.hyprland = {
     enable = true;
@@ -29,34 +40,34 @@
   # Essential packages for Hyprland workflow
   environment.systemPackages = with pkgs; [
     # Core Wayland/Hyprland tools
-    waybar               # Status bar
-    rofi-wayland         # Application launcher
-    dunst                # Notifications
-    grim                 # Screenshot tool
-    slurp                # Screen area selection
-    wl-clipboard         # Clipboard utilities
-    swaylock-effects     # Screen locker
-    swayidle             # Idle management
-    
+    waybar # Status bar
+    rofi-wayland # Application launcher
+    dunst # Notifications
+    grim # Screenshot tool
+    slurp # Screen area selection
+    wl-clipboard # Clipboard utilities
+    swaylock-effects # Screen locker
+    swayidle # Idle management
+
     # Terminal and file management
-    kitty                # Terminal emulator
-    ranger               # TUI file manager
-    
+    kitty # Terminal emulator
+    ranger # TUI file manager
+
     # Media and utilities
-    brightnessctl       # Brightness control
-    pamixer             # Audio control
-    playerctl           # Media player control
-    
+    brightnessctl # Brightness control
+    pamixer # Audio control
+    playerctl # Media player control
+
     # File manager (GUI fallback when needed)
     nemo
-    
+
     # Font for waybar/rofi
-    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    nerd-fonts.jetbrains-mono
   ];
 
   # Enable fonts
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    nerd-fonts.jetbrains-mono
   ];
 
   # XDG portal for screen sharing, file dialogs, etc.
@@ -68,5 +79,5 @@
 
   # Security services
   security.polkit.enable = true;
-  security.pam.services.swaylock = {};
+  security.pam.services.swaylock = { };
 }

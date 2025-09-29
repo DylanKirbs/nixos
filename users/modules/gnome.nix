@@ -2,10 +2,11 @@
   config,
   lib,
   pkgs,
+  hostDisplayManager,
   ...
 }:
 
-lib.mkIf (config.services.xserver.desktopManager.gnome.enable or false) {
+lib.mkIf (hostDisplayManager == "gnome") {
   dconf.settings = {
     "org/gnome/shell" = {
       favorite-apps = [

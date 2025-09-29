@@ -200,11 +200,14 @@
       parserFiles = builtins.listToAttrs (
         map (name: {
           name = "nvim/parser/${name}";
-          value = { source = "${parsers}/parser/${name}"; };
+          value = {
+            source = "${parsers}/parser/${name}";
+          };
         }) (builtins.attrNames (builtins.readDir "${parsers}/parser"))
       );
     in
-    parserFiles // {
+    parserFiles
+    // {
       # Normal LazyVim config here, see https://github.com/LazyVim/starter/tree/main/lua
       "nvim/lua".source = ./nvim-lua;
     };
