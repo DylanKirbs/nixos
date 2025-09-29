@@ -11,6 +11,7 @@
     ./common.nix
     ./modules/nushell.nix
     ./modules/gnome.nix
+    ./modules/hyprland.nix
     ./modules/sensible-vscode.nix
     ./modules/lazy-nvim.nix
     ./modules/kitty.nix

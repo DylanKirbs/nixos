@@ -5,7 +5,7 @@
   ...
 }:
 
-{
+lib.mkIf (config.services.xserver.desktopManager.gnome.enable or false) {
   dconf.settings = {
     "org/gnome/shell" = {
       favorite-apps = [

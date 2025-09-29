@@ -9,7 +9,6 @@
 }:
 {
   # Shared settings for all hosts
-
   imports = [ /etc/nixos/hardware-configuration.nix ];
 
   home-manager = {
@@ -37,7 +36,6 @@
   programs.nix-ld.package = pkgs-unstable.nix-ld-rs;
 
   # Packages
-  # nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) allowed-unfree-pkgs;
   environment.systemPackages =
     (with pkgs; [
       # General
@@ -61,11 +59,6 @@
       pinentry-tty
 
       ffmpeg-full
-
-      # LibreOffice
-      libreoffice-qt
-      hunspell
-      hunspellDicts.en_GB-ise
     ])
     ++ (with pkgs-unstable; [ firefox ]);
 
@@ -78,22 +71,9 @@
   time.timeZone = "Africa/Johannesburg";
 
   i18n.defaultLocale = "en_GB.UTF-8";
-
-  services.xserver.enable = true;
-
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-
   services.xserver.xkb.layout = "za";
-  services.printing.enable = true;
 
   virtualisation.docker.enable = true;
-
-  services.pulseaudio.enable = false;
-  services.pipewire = {
-    enable = true;
-    pulse.enable = true;
-  };
 
   services.openssh.enable = true;
 

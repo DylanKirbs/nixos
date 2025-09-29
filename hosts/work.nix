@@ -7,7 +7,10 @@
   ...
 }:
 {
-  imports = [ ./common.nix ];
+  imports = [
+    ./common.nix
+    ./display-managers/gnome.nix
+  ];
 
   # Host-specific settings
   networking.hostName = "work";
