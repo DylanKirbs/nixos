@@ -5,8 +5,23 @@
   hostDisplayManager,
   ...
 }:
-
 lib.mkIf (hostDisplayManager == "hyprland") {
+
+  gtk = {
+    enable = true;
+
+    theme = {
+      package = pkgs.catppuccin-gtk;
+      name = "Catppuccin-Mocha-Standard-Blue-Dark";
+    };
+
+    iconTheme = {
+      package = pkgs.adwaita-icon-theme;
+      name = "Adwaita";
+    };
+
+  };
+
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
@@ -15,7 +30,6 @@ lib.mkIf (hostDisplayManager == "hyprland") {
       exec-once = [
         "waybar"
         "dunst"
-        "swaybg -i ~/Pictures/Wallpapers/pixel-pusher-d.jpg"
         "swayidle -w"
         "wl-paste --watch"
       ];
@@ -49,29 +63,33 @@ lib.mkIf (hostDisplayManager == "hyprland") {
 
       animations.enabled = true;
 
+      "$mod" = "SUPER";
+
       bind = [
-        "SUPER, T, exec, kitty"
-        "SUPER, Q, killactive,"
-        "SUPER, M, exit,"
-        "SUPER, V, togglefloating,"
-        "SUPER, R, exec, rofi -show drun"
-        "SUPER, L, exec, swaylock-effects -f"
+        "$mod, space, exec, rofi -show drun"
+        "$mod, T, exec, kitty"
+        "$mod, Q, killactive,"
+        "$mod, M, exit,"
+        "$mod, V, togglefloating,"
+        "$mod, L, exec, swaylock --color=\"000000\""
+        "$mod, S, layoutmsg, togglesplit"
         # Swap focus
-        "SUPER, left, movefocus, l"
-        "SUPER, right, movefocus, r"
-        "SUPER, up, movefocus, u"
-        "SUPER, down, movefocus, d"
+        "$mod, Tab, exec, rofi -show window"
+        "$mod, left, movefocus, l"
+        "$mod, right, movefocus, r"
+        "$mod, up, movefocus, u"
+        "$mod, down, movefocus, d"
         # Swap workspace
-        "SUPER CONTROL, right, workspace, e+1"
-        "SUPER CONTROL, left, workspace, e-1"
+        "$mod CONTROL, right, workspace, e+1"
+        "$mod CONTROL, left, workspace, e-1"
         # Move to workspace
-        "SUPER SHIFT, right, movetoworkspace, e+1"
-        "SUPER SHIFT, left, movetoworkspace, e-1"
+        "$mod SHIFT, right, movetoworkspace, e+1"
+        "$mod SHIFT, left, movetoworkspace, e-1"
         # Misc
         ", PRINT, exec, hyprshot -m region"
       ];
 
-      bindel = [
+      binde = [
         ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
         ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
         ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
@@ -80,20 +98,98 @@ lib.mkIf (hostDisplayManager == "hyprland") {
         ",XF86MonBrightnessDown, exec, brightnessctl -e4 -n2 set 5%-"
       ];
 
-      windowrule = [
-        "float,class:^(kitty)$,title:^(kitty)$"
-        "suppressevent maximize, class:.*"
+      workspace = [
+        "*, layout:monocle"
       ];
 
     };
   };
 
-  # User program configs
+  programs.waybar = {
+    enable = true;
+    settings = {
+      mainBar = {
+        layer = "top";
+        position = "top";
+        modules-left = [
+          "hyprland/workspaces"
+          "clock"
+        ];
+        modules-right = [
+          "pulseaudio"
+          "network"
+          "battery"
+          "tray"
+        ];
+      };
+    };
+    style = ''
+      * {
+      font-family: "JetBrainsMono Nerd Font", sans-serif;
+      font-size: 13px;
+      min-height: 0;
+      }
+
+      window#waybar {
+      background: rgba(30, 30, 46, 0.85); /* #1e1e2e with transparency */
+      border-bottom: 2px solid #89b4fa;
+      color: #cdd6f4;
+      padding: 0 10px;
+      margin: 0 10px;
+      border-radius: 8px;
+      }
+
+      #workspaces button {
+      padding: 0 8px;
+      margin: 4px 4px;
+      background: transparent;
+      border-radius: 6px;
+      color: #a6adc8;
+      }
+      #workspaces button.focused {
+      background: #89b4fa;
+      color: #1e1e2e;
+      font-weight: bold;
+      }
+      #workspaces button.urgent {
+      background: #f38ba8;
+      color: #181825;
+      }
+
+      #clock, #pulseaudio, #network, #battery, #tray {
+      padding: 0 10px;
+      margin: 4px 4px;
+      background: rgba(49, 50, 68, 0.4);
+      border-radius: 6px;
+      }
+
+      #battery.critical {
+      color: #f38ba8;
+      font-weight: bold;
+      }
+    '';
+  };
+
+  programs.rofi = {
+    enable = true;
+    theme = "catppuccin-mocha";
+    extraConfig = {
+      modi = "drun,run,window";
+      show-icons = true;
+      icon-theme = "Adwaita";
+    };
+  };
+
+  home.file.".config/rofi/themes/catppuccin-mocha.rasi".source = pkgs.fetchurl {
+    url = "https://raw.githubusercontent.com/catppuccin/rofi/main/themes/catppuccin-mocha.rasi";
+    sha256 = "0ikn0yc2b9cyzk4xga8mcq1j7xk2idik4wzpsibrphy8qr2pla4b";
+  };
+
   programs.kitty.enable = true;
-  programs.rofi.enable = true;
 
   home.packages = with pkgs; [
-    swaybg
-    hyprshot
+    nerd-fonts.jetbrains-mono
+
   ];
+
 }
