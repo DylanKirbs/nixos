@@ -138,9 +138,12 @@ lib.mkIf (hostDisplayManager == "hyprland") {
               " "
             ];
           };
+          on-click = "pavucontrol";
+          on-click-right = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+          on-scroll-up = "wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+";
+          on-scroll-down = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
           tooltip-format = "Volume: {volume}%";
         };
-
         "network" = {
           format-wifi = "{icon} {essid} ({signalStrength}%)";
           format-ethernet = " {ifname}";
@@ -156,6 +159,7 @@ lib.mkIf (hostDisplayManager == "hyprland") {
           tooltip-format-ethernet = "Interface: {ifname}\nIPv4: {ipaddr}";
           tooltip-format-disconnected = "No connection";
           max-length = 50;
+          on-click = "nmtui";
         };
         "battery" = {
           format = "{icon} {capacity}%";
@@ -238,7 +242,7 @@ lib.mkIf (hostDisplayManager == "hyprland") {
 
   home.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
-
+    pavucontrol
   ];
 
 }
