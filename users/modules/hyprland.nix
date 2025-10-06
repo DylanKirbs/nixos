@@ -121,12 +121,61 @@ lib.mkIf (hostDisplayManager == "hyprland") {
           "battery"
           "tray"
         ];
+        "clock" = {
+          format = "󰥔 {:%Y-%m-%d %H:%M}";
+          tooltip-format = "<tt><small>{calendar}</small></tt>";
+        };
+        "pulseaudio" = {
+          format = "{icon} {volume}%";
+          format-muted = " ";
+          format-icons = {
+            headphone = " ";
+            handsfree = "󰋎 ";
+            headset = "󰋎 ";
+            default = [
+              ""
+              " "
+              " "
+            ];
+          };
+          tooltip-format = "Volume: {volume}%";
+        };
+
+        "network" = {
+          format-wifi = "{icon} {essid} ({signalStrength}%)";
+          format-ethernet = " {ifname}";
+          format-disconnected = " ";
+          format-icons = [
+            "󰤯 " # 0–20%
+            "󰤟 " # 20–40%
+            "󰤢 " # 40–60%
+            "󰤥 " # 60–80%
+            "󰤨 " # 80–100%
+          ];
+          tooltip-format-wifi = "SSID: {essid}\nSignal: {signalStrength}%\nIPv4: {ipaddr}";
+          tooltip-format-ethernet = "Interface: {ifname}\nIPv4: {ipaddr}";
+          tooltip-format-disconnected = "No connection";
+          max-length = 50;
+        };
+        "battery" = {
+          format = "{icon} {capacity}%";
+          format-charging = "󱊥 {capacity}%";
+          format-icons = [
+            "󰁺" # 0–20%
+            "󰁼" # 20–40%
+            "󰁾" # 40–60%
+            "󰂀" # 60–80%
+            "󰁹" # 80–100%
+          ];
+          tooltip-format = "{capacity}% ({status})";
+        };
+
       };
     };
     style = ''
       * {
       font-family: "JetBrainsMono Nerd Font", sans-serif;
-      font-size: 13px;
+      font-size: 14px;
       min-height: 0;
       }
 
