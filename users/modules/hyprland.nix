@@ -124,6 +124,7 @@ lib.mkIf (hostDisplayManager == "hyprland") {
         "clock" = {
           format = "󰥔 {:%Y-%m-%d %H:%M}";
           tooltip-format = "<tt><small>{calendar}</small></tt>";
+          on-click = "kitty -e calcurse";
         };
         "pulseaudio" = {
           format = "{icon} {volume}%";
@@ -138,7 +139,7 @@ lib.mkIf (hostDisplayManager == "hyprland") {
               " "
             ];
           };
-          on-click = "pavucontrol";
+          on-click = "kitty -e pulsemixer"; # or "pavucontrol";
           on-click-right = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
           on-scroll-up = "wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+";
           on-scroll-down = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
@@ -243,6 +244,8 @@ lib.mkIf (hostDisplayManager == "hyprland") {
   home.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
     pavucontrol
+    pulsemixer
+    calcurse
   ];
 
 }
