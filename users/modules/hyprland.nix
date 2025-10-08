@@ -25,7 +25,11 @@ lib.mkIf (hostDisplayManager == "hyprland") {
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
-      monitor = ",preferred,auto,1";
+      monitor = [
+        ",preferred,auto,1"
+        "HDMI-A-1,1600x900@60,-1600x-500,1"
+        "eDP-1,1600x900@60,0x0,1"
+      ];
 
       exec-once = [
         "waybar"
@@ -69,7 +73,6 @@ lib.mkIf (hostDisplayManager == "hyprland") {
         "$mod, space, exec, rofi -show drun"
         "$mod, T, exec, kitty"
         "$mod, M, exit,"
-        "$mod, L, exec, swaylock --clock --indicator --screenshots --effect-blur 7x5 --fade-in 0.2 --grace 2 --indicator-radius 120 --indicator-thickness 8 --ring-color 89b4fa --key-hl-color fab387 --line-color 1e1e2e --inside-color 11111b --font 'JetBrainsMono Nerd Font' --text-color cdd6f4"
         # Manage windows
         "$mod, Q, killactive,"
         "$mod, V, togglefloating,"
@@ -92,6 +95,10 @@ lib.mkIf (hostDisplayManager == "hyprland") {
         "$mod SHIFT, left, movetoworkspace, -1"
         # Misc
         ", PRINT, exec, hyprshot -m region"
+      ];
+
+      bindl = [
+        "$mod, L, exec, hyprlock"
       ];
 
       binde = [
@@ -117,15 +124,34 @@ lib.mkIf (hostDisplayManager == "hyprland") {
         layer = "top";
         position = "top";
         modules-left = [
-          "hyprland/workspaces"
           "clock"
+        ];
+        modules-center = [
+          "hyprland/workspaces"
         ];
         modules-right = [
           "pulseaudio"
           "network"
+          "cpu"
+          "memory"
+          "temperature"
           "battery"
           "tray"
         ];
+
+        # Modules
+        "hyprland/workspaces" = {
+          "format" = "{icon} | {windows}";
+          "window-rewrite-default" = "";
+          "window-rewrite" = {
+            "title<.*youtube.*>" = "";
+            "class<firefox>" = "";
+            "class<firefox> title<.*github.*>" = "";
+            "kitty" = "";
+            "code" = "󰨞";
+          };
+        };
+
         "clock" = {
           format = "󰥔 {:%Y-%m-%d %H:%M}";
           tooltip-format = "<tt><small>{calendar}</small></tt>";
@@ -165,6 +191,27 @@ lib.mkIf (hostDisplayManager == "hyprland") {
           tooltip-format-disconnected = "No connection";
           max-length = 50;
           on-click = "kitty -e nmtui";
+        };
+        "cpu" = {
+          format = " {usage:>2}% {icon}"; # can add {icon0} for each core...
+          format-icons = [
+            "▁"
+            "▂"
+            "▃"
+            "▄"
+            "▅"
+            "▆"
+            "▇"
+            "█"
+          ];
+        };
+        "memory" = {
+          format = " {percentage}%";
+        };
+        "temperature" = {
+          critical-threshold = 80;
+          format-critical = "{temperatureC}°C ";
+          format = "{temperatureC}°C ";
         };
         "battery" = {
           format = "{icon} {capacity}%";
@@ -214,19 +261,50 @@ lib.mkIf (hostDisplayManager == "hyprland") {
       color: #181825;
       }
 
-      #clock, #pulseaudio, #network, #battery, #tray {
+      #clock, #pulseaudio, #network, #cpu, #memory, #temperature, #battery, #tray {
       padding: 0 10px;
       margin: 4px 4px;
       background: rgba(49, 50, 68, 0.4);
       border-radius: 6px;
       }
 
-      #battery.critical {
+      #.critical {
       color: #f38ba8;
       font-weight: bold;
       }
     '';
   };
+
+  home.file.".config/hypr/hyprlock.conf".text = ''
+    background {
+        blur_size = 7
+        blur_passes = 3
+        brightness = 0.6
+        contrast = 1.1
+    }
+
+    input-field {
+        size = 250, 60
+        outline_thickness = 3
+        dots_size = 0.2
+        dots_spacing = 0.15
+        outer_color = rgba(137,180,250,0.8)
+        inner_color = rgba(17,17,27,0.8)
+        font_color = rgba(205,214,244,1.0)
+    }
+
+    label {
+        text = $TIME
+        font_size = 64
+        color = rgba(205,214,244,1.0)
+        position = 0, -200
+    }
+
+    general {
+        grace = 2
+        fade_in = 0.2
+    }
+  '';
 
   programs.rofi = {
     enable = true;
@@ -250,6 +328,7 @@ lib.mkIf (hostDisplayManager == "hyprland") {
     pavucontrol
     pulsemixer
     calcurse
+    hyprlock
   ];
 
 }
