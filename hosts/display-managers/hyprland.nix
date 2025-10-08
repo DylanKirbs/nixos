@@ -24,6 +24,7 @@
     enable = true;
     settings = {
       default_session = {
+        vt = 2; # use tty2
         command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
         user = "greeter";
       };

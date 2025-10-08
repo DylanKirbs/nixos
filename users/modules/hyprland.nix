@@ -68,23 +68,28 @@ lib.mkIf (hostDisplayManager == "hyprland") {
       bind = [
         "$mod, space, exec, rofi -show drun"
         "$mod, T, exec, kitty"
-        "$mod, Q, killactive,"
         "$mod, M, exit,"
+        "$mod, L, exec, swaylock --clock --indicator --screenshots --effect-blur 7x5 --fade-in 0.2 --grace 2 --indicator-radius 120 --indicator-thickness 8 --ring-color 89b4fa --key-hl-color fab387 --line-color 1e1e2e --inside-color 11111b --font 'JetBrainsMono Nerd Font' --text-color cdd6f4"
+        # Manage windows
+        "$mod, Q, killactive,"
         "$mod, V, togglefloating,"
-        "$mod, L, exec, swaylock --color=\"000000\""
-        "$mod, S, layoutmsg, togglesplit"
-        # Swap focus
-        "$mod, Tab, exec, rofi -show window"
+        "$mod, F, fullscreen,"
+        # Swap focus to window
         "$mod, left, movefocus, l"
         "$mod, right, movefocus, r"
         "$mod, up, movefocus, u"
         "$mod, down, movefocus, d"
-        # Swap workspace
-        "$mod CONTROL, right, workspace, e+1"
-        "$mod CONTROL, left, workspace, e-1"
-        # Move to workspace
-        "$mod SHIFT, right, movetoworkspace, e+1"
-        "$mod SHIFT, left, movetoworkspace, e-1"
+        # Move window in workspace
+        "$mod ALT, left, movewindow, l"
+        "$mod ALT, right, movewindow, r"
+        "$mod ALT, up, movewindow, u"
+        "$mod ALT, down, movewindow, d"
+        # Swap focus to workspace
+        "$mod CONTROL, right, workspace, +1"
+        "$mod CONTROL, left, workspace, -1"
+        # Move window to workspace
+        "$mod SHIFT, right, movetoworkspace, +1"
+        "$mod SHIFT, left, movetoworkspace, -1"
         # Misc
         ", PRINT, exec, hyprshot -m region"
       ];
@@ -99,7 +104,7 @@ lib.mkIf (hostDisplayManager == "hyprland") {
       ];
 
       workspace = [
-        "*, layout:monocle"
+        "*, layout:dwindle"
       ];
 
     };
