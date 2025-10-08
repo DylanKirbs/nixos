@@ -139,19 +139,18 @@ lib.mkIf (hostDisplayManager == "hyprland") {
             handsfree = "󰋎 ";
             headset = "󰋎 ";
             default = [
-              ""
+              " "
               " "
               " "
             ];
           };
           on-click = "kitty -e pulsemixer"; # or "pavucontrol";
           on-click-right = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-          on-scroll-up = "wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+";
-          on-scroll-down = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
-          tooltip-format = "Volume: {volume}%";
+          reverse-scrolling = true;
+          tooltip-format = "{descr}\nVolume: {volume}%";
         };
         "network" = {
-          format-wifi = "{icon} {essid} ({signalStrength}%)";
+          format-wifi = "{icon} {essid}";
           format-ethernet = " {ifname}";
           format-disconnected = " ";
           format-icons = [
@@ -165,11 +164,11 @@ lib.mkIf (hostDisplayManager == "hyprland") {
           tooltip-format-ethernet = "Interface: {ifname}\nIPv4: {ipaddr}";
           tooltip-format-disconnected = "No connection";
           max-length = 50;
-          on-click = "nmtui";
+          on-click = "kitty -e nmtui";
         };
         "battery" = {
           format = "{icon} {capacity}%";
-          format-charging = "󱊥 {capacity}%";
+          format-charging = "󰂄 {capacity}%";
           format-icons = [
             "󰁺" # 0–20%
             "󰁼" # 20–40%
@@ -177,7 +176,7 @@ lib.mkIf (hostDisplayManager == "hyprland") {
             "󰂀" # 60–80%
             "󰁹" # 80–100%
           ];
-          tooltip-format = "{capacity}% ({status})";
+          tooltip-format = "Capacity (%): {capacity}\nPower (W): {power}\nTime to empty: {time}\nCharge cycles: {cycles}\nHealth (%): {health}";
         };
 
       };
