@@ -46,7 +46,7 @@ lib.mkIf (hostDisplayManager == "hyprland") {
 
       general = {
         gaps_in = 5;
-        gaps_out = 10;
+        gaps_out = 5;
         border_size = 2;
         "col.active_border" = "0xff89b4fa";
         "col.inactive_border" = "0xff444444";
@@ -276,6 +276,8 @@ lib.mkIf (hostDisplayManager == "hyprland") {
   };
 
   home.file.".config/hypr/hyprlock.conf".text = ''
+    ignore_empty_input = true
+
     background {
         blur_size = 7
         blur_passes = 3
@@ -308,17 +310,12 @@ lib.mkIf (hostDisplayManager == "hyprland") {
 
   programs.rofi = {
     enable = true;
-    theme = "catppuccin-mocha";
+    theme = "Monokai";
     extraConfig = {
       modi = "drun,run,window";
       show-icons = true;
       icon-theme = "Adwaita";
     };
-  };
-
-  home.file.".config/rofi/themes/catppuccin-mocha.rasi".source = pkgs.fetchurl {
-    url = "https://raw.githubusercontent.com/catppuccin/rofi/main/themes/catppuccin-mocha.rasi";
-    sha256 = "0ikn0yc2b9cyzk4xga8mcq1j7xk2idik4wzpsibrphy8qr2pla4b";
   };
 
   programs.kitty.enable = true;
