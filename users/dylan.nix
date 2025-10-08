@@ -68,6 +68,7 @@
       gh
       sshfs
       unzip
+      termpdfpy
     ])
     ++ (with pkgs-unstable; [
       # Unstable packages
