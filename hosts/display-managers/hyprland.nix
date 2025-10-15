@@ -18,6 +18,7 @@
     withUWSM = true;
     xwayland.enable = true;
   };
+  services.gnome.gnome-keyring.enable = true;
 
   # Minimal login experience
   services.greetd = {
@@ -65,6 +66,8 @@
 
     # Font for waybar/rofi
     nerd-fonts.jetbrains-mono
+
+    libsecret
   ];
 
   # Enable fonts

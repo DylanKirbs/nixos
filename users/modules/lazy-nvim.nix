@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  pkgs-unstable,
   ...
 }:
 
@@ -35,6 +36,7 @@
       aspellDicts.en
       aspellDicts.en-computers
       aspellDicts.en-science
+      zathura
     ];
 
     plugins = with pkgs.vimPlugins; [
@@ -88,6 +90,7 @@
           rustaceanvim
           vim-molokai-delroth
           snacks-nvim
+          vimtex
           {
             name = "LuaSnip";
             path = luasnip;

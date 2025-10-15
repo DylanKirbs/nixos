@@ -20,6 +20,13 @@ lib.mkIf (hostDisplayManager == "hyprland") {
       name = "Adwaita";
     };
 
+    gtk3.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+    gtk4.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+
   };
 
   wayland.windowManager.hyprland = {
@@ -45,7 +52,7 @@ lib.mkIf (hostDisplayManager == "hyprland") {
       };
 
       general = {
-        gaps_in = 5;
+        gaps_in = 3;
         gaps_out = 5;
         border_size = 2;
         "col.active_border" = "0xff89b4fa";
