@@ -25,6 +25,7 @@
         "vscode-extension-mhutchie-git-graph"
         "vscode-extension-ms-vscode-cpptools"
         "vscode-extension-ms-vscode-remote-remote-ssh"
+        "vscode-extension-github-codespaces"
         "steam"
         "steam-original"
         "steam-unwrapped"
