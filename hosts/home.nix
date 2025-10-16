@@ -32,5 +32,6 @@
     ])
     ++ (with pkgs-unstable; [
       # Unstable packages
+      blender
     ]);
 }
