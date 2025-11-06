@@ -7,6 +7,13 @@
 }:
 
 lib.mkIf (hostDisplayManager == "gnome") {
+  programs.gnome-shell = {
+    enable = true;
+    extensions = [
+      { package = pkgs.gnomeExtensions.paperwm; }
+    ];
+  };
+
   dconf.settings = {
     "org/gnome/shell" = {
       favorite-apps = [

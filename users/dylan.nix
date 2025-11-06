@@ -33,6 +33,12 @@
           matplotlib
           pygments
           tqdm
+          scipy
+          seaborn
+          plotly
+
+          tree-sitter
+          tree-sitter-grammars.tree-sitter-c
 
           # LSP stuff
           python-lsp-server
@@ -56,8 +62,9 @@
       pkg-config
 
       # Tex
-      texliveFull
-      texlivePackages.pygmentex
+      (pkgs.texlive.combine {
+        inherit (pkgs.texlive) scheme-full pygmentex raleway;
+      })
       jabref
 
       # Misc
