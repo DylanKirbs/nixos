@@ -8,7 +8,7 @@
 }:
 {
   imports = [
-    ./display-managers/hyprland.nix
+    ./display-managers/gnome.nix
     ./common.nix
   ];
 

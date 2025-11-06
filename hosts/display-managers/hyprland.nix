@@ -62,7 +62,7 @@
     playerctl # Media player control
 
     # File manager (GUI fallback when needed)
-    nemo
+    nautilus
 
     # Font for waybar/rofi
     nerd-fonts.jetbrains-mono

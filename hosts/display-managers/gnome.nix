@@ -26,8 +26,5 @@
 
   # GNOME-specific packages
   environment.systemPackages = with pkgs; [
-    libreoffice-qt
-    hunspell
-    hunspellDicts.en_GB-ise
   ];
 }

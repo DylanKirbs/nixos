@@ -50,7 +50,9 @@
       inetutils
       tree
       ripgrep
+      ripgrep-all
       fd
+      fzf
 
       # Nix Dev
       nixfmt-rfc-style
@@ -62,6 +64,10 @@
       pinentry-tty
 
       ffmpeg-full
+    
+      libreoffice-qt
+      hunspell
+      hunspellDicts.en_GB-ise
     ])
     ++ (with pkgs-unstable; [ firefox ]);
 
