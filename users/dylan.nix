@@ -37,6 +37,11 @@
           seaborn
           plotly
 
+          pytest
+          pyyaml
+          openpyxl
+          fastparquet
+
           tree-sitter
           tree-sitter-grammars.tree-sitter-c
 
@@ -77,12 +82,15 @@
       unzip
       termpdfpy
       ghostscript
+
+      direnv
     ])
     ++ (with pkgs-unstable; [
       # Unstable packages
       tex-fmt
       gimp-with-plugins
       weylus
+      hledger
     ]);
 
   home.sessionVariables = {

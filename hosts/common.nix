@@ -36,7 +36,7 @@
   services.zerotierone.enable = true;
 
   programs.nix-ld.enable = true;
-  programs.nix-ld.package = pkgs-unstable.nix-ld-rs;
+  programs.nix-ld.package = pkgs-unstable.nix-ld;
 
   # Packages
   environment.systemPackages =
@@ -64,7 +64,7 @@
       pinentry-tty
 
       ffmpeg-full
-    
+
       libreoffice-qt
       hunspell
       hunspellDicts.en_GB-ise
