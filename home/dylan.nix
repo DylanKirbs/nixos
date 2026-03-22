@@ -9,12 +9,12 @@
 {
   imports = [
     ./common.nix
-    ./modules/nushell.nix
-    ./modules/gnome.nix
-    ./modules/sensible-vscode.nix
-    ./modules/lazy-nvim.nix
-    ./modules/kitty.nix
-    ./modules/warp-shell.nix
+    ./nushell.nix
+    ./gnome.nix
+    ./sensible-vscode.nix
+    ./lazy-nvim.nix
+    ./kitty.nix
+    ./warp-shell.nix
   ];
 
   home.username = "dylan";

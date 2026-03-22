@@ -8,8 +8,10 @@ in
       {
         meta.username = "admin";
       }
-      nixos.common
+      nixos.labBase
       nixos.homeManagerBase
+      nixos.hostOptions
+      nixos.gnome
       nixos.labHost
       {
         imports = [

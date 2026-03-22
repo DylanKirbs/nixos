@@ -12,9 +12,14 @@
   };
 
   config.flake.nixosConfigurations = lib.mapAttrs (
-    _: definition:
+    name: definition:
     lib.nixosSystem {
-      modules = [ definition.module ];
+      modules = [
+        {
+          networking.hostName = name;
+        }
+        definition.module
+      ];
     }
   ) config.configurations.nixos;
 }

@@ -20,14 +20,6 @@ in
       };
     in
     {
-      networking.hostName = "home";
-
-      services.openvpn.servers = {
-        thmVPN = {
-          config = ''config /home/dylan/openvpn/dylan.kirby.365.ovpn '';
-        };
-      };
-
       programs.steam = {
         package = pkgs.steam;
         enable = true;
@@ -44,8 +36,6 @@ in
       ...
     }:
     {
-      networking.hostName = "work";
-
       environment.systemPackages = with pkgs; [
         unzip
       ];
@@ -72,13 +62,73 @@ in
       };
     };
 
+  flake.modules.nixos.labBase =
+    {
+      lib,
+      pkgs,
+      ...
+    }:
+    let
+      pkgs-unstable = import inputs.nixpkgs-unstable {
+        system = pkgs.stdenv.hostPlatform.system;
+        config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) allowedUnfreePackages;
+      };
+    in
+    {
+      imports = [
+        config.flake.modules.nixos._baseNixpkgs
+      ];
+
+      users.users.${username} = {
+        isNormalUser = true;
+        extraGroups = [
+          "wheel"
+          "networkmanager"
+          "docker"
+        ];
+        shell = pkgs.bashInteractive;
+      };
+
+      environment.systemPackages =
+        (with pkgs; [
+          bashInteractive
+          btop
+          file
+          git
+          inetutils
+          neovim
+          tree
+          vim
+          vscode
+          wget
+        ])
+        ++ (with pkgs-unstable; [ firefox ]);
+
+      virtualisation.docker.enable = true;
+      networking.networkmanager.enable = true;
+
+      boot.loader.systemd-boot.enable = true;
+      boot.loader.efi.canTouchEfiVariables = true;
+
+      services.openssh.enable = true;
+
+      time.timeZone = "Africa/Johannesburg";
+      i18n.defaultLocale = "en_GB.UTF-8";
+      services.xserver.xkb.layout = "za";
+
+      nix.settings.experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+
+      system.stateVersion = "24.05";
+    };
+
   flake.modules.nixos.labHost =
     {
       ...
     }:
     {
-      networking.hostName = "lab";
-
       services.openssh = {
         enable = true;
         settings = {
