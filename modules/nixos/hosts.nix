@@ -72,16 +72,14 @@ in
           file
           git
           inetutils
-          neovim
           tree
-          vim
-          vscode
           wget
         ])
         ++ (with pkgs.unstable; [ firefox ]);
 
       virtualisation.docker.enable = true;
       networking.networkmanager.enable = true;
+      services.zerotierone.enable = true;
 
       boot.loader.systemd-boot.enable = true;
       boot.loader.efi.canTouchEfiVariables = true;

@@ -6,15 +6,25 @@ in
   flake.modules.homeManager.admin =
     { pkgs, ... }:
     {
-      imports = [ hm.common ];
+      imports = [
+        hm.common
+        hm.kitty
+        hm.lazyNvim
+        hm.sensibleVscode
+      ];
 
       home.username = "admin";
       home.homeDirectory = "/home/admin";
 
       home.packages = with pkgs; [
         btop
+        fd
+        ffmpeg-full
+        fzf
         git
-        tmux
+        nixfmt-rfc-style
+        openssl
+        ripgrep
       ];
     };
 }
