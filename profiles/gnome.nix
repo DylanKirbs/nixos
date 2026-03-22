@@ -1,12 +1,9 @@
 {
-  config,
-  lib,
   pkgs,
-  hostDisplayManager,
   ...
 }:
 
-lib.mkIf (hostDisplayManager == "gnome") {
+{
   programs.gnome-shell = {
     enable = true;
     extensions = [

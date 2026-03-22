@@ -79,7 +79,7 @@ in
         config.flake.modules.nixos._baseNixpkgs
       ];
 
-      users.users.${username} = {
+      users.users.admin = {
         isNormalUser = true;
         extraGroups = [
           "wheel"
@@ -135,7 +135,7 @@ in
           PasswordAuthentication = false;
           KbdInteractiveAuthentication = false;
           PermitRootLogin = "no";
-          AllowUsers = [ username ];
+          AllowUsers = [ "admin" ];
         };
       };
     };

@@ -26,7 +26,6 @@ in
       home-manager.backupFileExtension = "backup";
       home-manager.extraSpecialArgs = {
         inherit pkgs-unstable;
-        hostDisplayManager = config.hostDisplayManager;
       };
     };
 }
