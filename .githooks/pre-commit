@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
+
+echo "[pre-commit] running treefmt"
+treefmt
+
+if ! git diff --quiet; then
+  echo "[pre-commit] treefmt changed files. Stage and commit again."
+  git --no-pager diff --name-only
+  exit 1
+fi
+
+echo "[pre-commit] flake freshness"
+"$repo_root/scripts/flake-age.sh" "$repo_root/flake.lock"
+
+echo "[pre-commit] checks passed"

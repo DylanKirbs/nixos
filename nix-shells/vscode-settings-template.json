@@ -1,13 +1,13 @@
 {
-    "nixEnvSelector.nixFile": "${workspaceRoot}/shell.nix",
+    "nixEnvSelector.nixFile": "${workspaceRoot}/flake.nix",
     "terminal.integrated.profiles.linux": {
-        "NixShell": {
+        "NixDevelop": {
             "path": "nu",
             "args": [
                 "-c",
-                "nix-shell --run nu"
+                "nix develop .#py -c nu"
             ]
         }
     },
-    "terminal.integrated.defaultProfile.linux": "NixShell"
+    "terminal.integrated.defaultProfile.linux": "NixDevelop"
 }

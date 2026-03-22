@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Error codes: 1=usage, 2=directory, 3=shell OR the result of the nix shell
+# Error codes: 1=usage, 2=directory, 3=shell OR the result of the nix command
+
+FLAKE_REF="path:${HOME}/nixos"
 
 if [ "$#" -lt 2 ]; then
   echo "Usage: nixwarp <shell-type> <directory>"
-  echo "  The shell must be present as ~/nix-shells/<shell-type>-shell.nix"
+  echo "  Available shell types are defined in ${FLAKE_REF}#devShells"
   echo "  Specifying a <shell-type> of . indicates that the shell in the directory must be used"
   exit 1
 fi
@@ -30,21 +32,15 @@ cd "$directory"
 
 # If type == . then use the local shell
 if [ "$shell_type" = "." ]; then
-    nix-shell --run "nu"
+    nix develop -c nu
     exit $?
 fi
 
 # Get available shells
-available_shells=()
-for f in "$HOME/nix-shells/"*-shell.nix; do
-  [ -e "$f" ] || continue
-  fname=$(basename "$f")
-  available_shells+=("${fname%-shell.nix}")
-done
+available_shells=(py jupyter rust ts-c)
 
-# Shell file
-shell_file="$HOME/nix-shells/${shell_type}-shell.nix"
-if [ ! -f "$shell_file" ]; then
+# Shell check
+if ! printf '%s\n' "${available_shells[@]}" | grep -qx "$shell_type"; then
   # Find closest match
   best_match=""
   lowest_distance=$(("${#shell_type}" + 5))
@@ -78,11 +74,10 @@ if [ ! -f "$shell_file" ]; then
       exit 3
     fi
     shell_type=$best_match
-    shell_file="$HOME/nix-shells/${shell_type}-shell.nix"
   else
-    echo "Shell file not found: $shell_file"
+    echo "Shell type not found: $shell_type"
     echo ""
-    echo "Available shells in ~/nix-shells:"
+    echo "Available shells:"
     for shell in "${available_shells[@]}"; do
       echo "  - $shell"
     done
@@ -90,5 +85,5 @@ if [ ! -f "$shell_file" ]; then
   fi
 fi
 
-nix-shell "$shell_file" --run "nu"
+nix develop "${FLAKE_REF}#${shell_type}" -c nu
 exit $?

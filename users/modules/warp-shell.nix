@@ -10,10 +10,5 @@ let
   scriptText = builtins.readFile ./warp-shell.sh;
 in
 {
-  home.file."nix-shells" = {
-    source = ../../nix-shells;
-    target = "nix-shells";
-  };
-
   home.packages = [ (pkgs.writeScriptBin scriptName scriptText) ];
 }

@@ -11,19 +11,19 @@ sudo nix flake update
 ```
 
 
-**Switch the configuration to a specific user on a specific host:**
+**Switch the configuration to a setup:**
 ```
-sudo nixos-rebuild switch --flake .#<user>@<hostname>
+sudo nixos-rebuild switch --flake .#<setup>
 ```
 
-> See `users/` for user configurations<br>
-> See `hosts/` for host configurations
+> See `setups/` for machine bundles<br>
+> See `modules/` for reusable feature modules
 
 ---
 
 This is my personal NixOS configuration. It is a work in progress and is constantly changing. I am using this repository to keep track of my configuration and to make it easier to replicate my setup on other machines.
 
-Currently, this configuration uses a flakes-based setup with a NixOS module approach to Home Manager. This allows me to easily manage my system configuration and user configuration in a single repository.
+Currently, this configuration uses a dendritic flakes setup with flake-parts. This allows me to compose machine bundles from reusable modules in a single repository.
 
 The flake imports packages from Nixpkgs 24.05 and unstable in two separate inputs. This allows more flexibility in the packages that can be used in the configuration. In addition it features an `allowed-unfree-pkgs` attribute that allows me to easily configure which packages are allowed to be used in both safe and unsafe package repositories.
 
