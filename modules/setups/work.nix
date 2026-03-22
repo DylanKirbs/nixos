@@ -1,14 +1,14 @@
 { config, ... }:
 let
-  inherit (config.flake.modules) nixos;
+  inherit (config.flake.modules) nixos homeManager;
 in
 {
-  configurations.nixos.home.module = {
+  configurations.nixos.work.module = {
     imports = [
       nixos.common
       nixos.homeManagerBase
       nixos.gnome
-      nixos.homeHost
+      nixos.workHost
       {
         imports = [
           /etc/nixos/hardware-configuration.nix
@@ -20,7 +20,7 @@ in
 
     home-manager.users.${config.meta.username} = {
       imports = [
-        ../profiles/dylan.nix
+        homeManager.dylan
       ];
     };
   };

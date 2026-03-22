@@ -1,31 +1,17 @@
-{
-  config,
-  inputs,
-  ...
-}:
+{ config, ... }:
 let
-  inherit (config.meta) username allowedUnfreePackages;
+  inherit (config.meta) username;
 in
 {
   flake.modules.nixos.homeHost =
-    {
-      lib,
-      pkgs,
-      ...
-    }:
-    let
-      pkgs-unstable = import inputs.nixpkgs-unstable {
-        system = pkgs.stdenv.hostPlatform.system;
-        config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) allowedUnfreePackages;
-      };
-    in
+    { pkgs, ... }:
     {
       programs.steam = {
         package = pkgs.steam;
         enable = true;
       };
 
-      environment.systemPackages = with pkgs-unstable; [
+      environment.systemPackages = with pkgs.unstable; [
         blender
       ];
     };
@@ -63,17 +49,7 @@ in
     };
 
   flake.modules.nixos.labBase =
-    {
-      lib,
-      pkgs,
-      ...
-    }:
-    let
-      pkgs-unstable = import inputs.nixpkgs-unstable {
-        system = pkgs.stdenv.hostPlatform.system;
-        config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) allowedUnfreePackages;
-      };
-    in
+    { pkgs, ... }:
     {
       imports = [
         config.flake.modules.nixos._baseNixpkgs
@@ -102,7 +78,7 @@ in
           vscode
           wget
         ])
-        ++ (with pkgs-unstable; [ firefox ]);
+        ++ (with pkgs.unstable; [ firefox ]);
 
       virtualisation.docker.enable = true;
       networking.networkmanager.enable = true;

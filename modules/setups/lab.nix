@@ -1,6 +1,6 @@
 { config, ... }:
 let
-  inherit (config.flake.modules) nixos;
+  inherit (config.flake.modules) nixos homeManager;
 in
 {
   configurations.nixos.lab.module = {
@@ -20,7 +20,7 @@ in
 
     home-manager.users.admin = {
       imports = [
-        ../profiles/admin.nix
+        homeManager.admin
       ];
     };
   };

@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, inputs, ... }:
 let
   inherit (config.meta) allowedUnfreePackages;
   mkAllowUnfreePredicate = lib: pkg: builtins.elem (lib.getName pkg) allowedUnfreePackages;
@@ -8,5 +8,14 @@ in
     { lib, ... }:
     {
       nixpkgs.config.allowUnfreePredicate = mkAllowUnfreePredicate lib;
+
+      nixpkgs.overlays = [
+        (final: prev: {
+          unstable = import inputs.nixpkgs-unstable {
+            system = prev.stdenv.hostPlatform.system;
+            config.allowUnfreePredicate = mkAllowUnfreePredicate lib;
+          };
+        })
+      ];
     };
 }

@@ -1,24 +1,10 @@
-{
-  config,
-  inputs,
-  ...
-}:
+{ config, ... }:
 let
-  inherit (config.meta) username allowedUnfreePackages;
+  inherit (config.meta) username;
 in
 {
   flake.modules.nixos.common =
-    {
-      lib,
-      pkgs,
-      ...
-    }:
-    let
-      pkgs-unstable = import inputs.nixpkgs-unstable {
-        system = pkgs.stdenv.hostPlatform.system;
-        config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) allowedUnfreePackages;
-      };
-    in
+    { pkgs, ... }:
     {
       imports = [
         config.flake.modules.nixos._baseNixpkgs
@@ -37,7 +23,7 @@ in
       services.zerotierone.enable = true;
 
       programs.nix-ld.enable = true;
-      programs.nix-ld.package = pkgs-unstable.nix-ld;
+      programs.nix-ld.package = pkgs.unstable.nix-ld;
 
       environment.systemPackages =
         (with pkgs; [
@@ -63,7 +49,7 @@ in
           hunspell
           hunspellDicts.en_GB-ise
         ])
-        ++ (with pkgs-unstable; [ firefox ]);
+        ++ (with pkgs.unstable; [ firefox ]);
 
       boot.loader.systemd-boot.enable = true;
       boot.loader.efi.canTouchEfiVariables = true;
