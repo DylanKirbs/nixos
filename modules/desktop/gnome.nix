@@ -5,9 +5,7 @@
     {
       programs.gnome-shell = {
         enable = true;
-        extensions = [
-          { package = pkgs.gnomeExtensions.paperwm; }
-        ];
+        extensions = [ ];
       };
 
       dconf.settings = {
@@ -35,6 +33,7 @@
         };
         "org/gnome/mutter" = {
           dynamic-workspaces = true;
+          experimental-features = [ ];
         };
         "org/gnome/desktop/peripherals/touchpad" = {
           tap-to-click = true;

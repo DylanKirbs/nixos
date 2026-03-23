@@ -10,6 +10,7 @@ in
       nixpkgs.config.allowUnfreePredicate = mkAllowUnfreePredicate lib;
 
       nixpkgs.overlays = [
+        inputs.agenix.overlays.default
         (final: prev: {
           unstable = import inputs.nixpkgs-unstable {
             system = prev.stdenv.hostPlatform.system;

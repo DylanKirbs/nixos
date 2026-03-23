@@ -26,5 +26,11 @@ in
         openssl
         ripgrep
       ];
+
+      programs.git = {
+        enable = true;
+        userName = "Dylan@Lab";
+        userEmail = "dylan.kirby.365@gmail.com";
+      };
     };
 }

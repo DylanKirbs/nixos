@@ -1,10 +1,11 @@
-{ config, ... }:
+{ config, inputs, ... }:
 let
   inherit (config.flake.modules) nixos homeManager;
 in
 {
   configurations.nixos.work.module = {
     imports = [
+      inputs.agenix.nixosModules.default
       nixos.common
       nixos.homeManagerBase
       nixos.gnome

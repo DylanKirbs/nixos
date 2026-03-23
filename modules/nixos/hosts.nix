@@ -1,6 +1,7 @@
 { config, ... }:
 let
   inherit (config.meta) username;
+  baseNixpkgs = config.flake.modules.nixos._baseNixpkgs;
 in
 {
   flake.modules.nixos.homeHost =
@@ -49,10 +50,14 @@ in
     };
 
   flake.modules.nixos.labBase =
-    { pkgs, ... }:
+    {
+      config,
+      pkgs,
+      ...
+    }:
     {
       imports = [
-        config.flake.modules.nixos._baseNixpkgs
+        baseNixpkgs
       ];
 
       users.users.admin = {
@@ -74,12 +79,32 @@ in
           inetutils
           tree
           wget
+          agenix
         ])
         ++ (with pkgs.unstable; [ firefox ]);
 
       virtualisation.docker.enable = true;
       networking.networkmanager.enable = true;
       services.zerotierone.enable = true;
+      services.zerotierone.joinNetworks = [ ];
+
+      age.secrets.zerotier-network-id.file = ../../secrets/zerotier-network-id.age;
+
+      systemd.services.zerotier-join-network = {
+        description = "Join ZeroTier network from agenix secret";
+        wantedBy = [ "multi-user.target" ];
+        after = [ "zerotierone.service" ];
+        requires = [ "zerotierone.service" ];
+        serviceConfig.Type = "oneshot";
+        script = ''
+          if [ -r ${config.age.secrets.zerotier-network-id.path} ]; then
+            network_id="$(tr -d '\n' < ${config.age.secrets.zerotier-network-id.path})"
+            if [ -n "$network_id" ]; then
+              ${pkgs.zerotierone}/bin/zerotier-cli join "$network_id"
+            fi
+          fi
+        '';
+      };
 
       boot.loader.systemd-boot.enable = true;
       boot.loader.efi.canTouchEfiVariables = true;
