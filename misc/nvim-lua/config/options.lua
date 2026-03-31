@@ -36,3 +36,6 @@ elseif vim.fn.has("unix") == 1 then
     }
   end
 end
+
+vim.opt.title = true
+vim.opt.titlestring = "%{fnamemodify(getcwd(), ':t')} - Nvim"
