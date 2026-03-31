@@ -1,7 +1,9 @@
 { config, inputs, ... }:
 let
   inherit (config.meta) allowedUnfreePackages;
-  mkAllowUnfreePredicate = lib: pkg: builtins.elem (lib.getName pkg) allowedUnfreePackages;
+  mkAllowUnfreePredicate =
+    lib: pkg:
+    builtins.elem (lib.toLower (lib.getName pkg)) (map lib.toLower allowedUnfreePackages);
 in
 {
   flake.modules.nixos._baseNixpkgs =
@@ -11,6 +13,7 @@ in
 
       nixpkgs.overlays = [
         inputs.agenix.overlays.default
+        inputs.nix-vscode-extensions.overlays.default
         (final: prev: {
           unstable = import inputs.nixpkgs-unstable {
             system = prev.stdenv.hostPlatform.system;

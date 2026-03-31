@@ -2,13 +2,16 @@
 {
   flake.modules.homeManager.sensibleVscode =
     { pkgs, ... }:
+    let
+      marketExt = pkgs.nix-vscode-extensions.vscode-marketplace-release;
+    in
     {
       programs.vscode = {
         enable = true;
         package = pkgs.unstable.vscode;
         mutableExtensionsDir = false;
 
-        profiles.default.extensions = with pkgs.unstable.vscode-extensions; [
+        profiles.default.extensions = with marketExt; [
           # Utilities
           streetsidesoftware.code-spell-checker
           mhutchie.git-graph
@@ -25,8 +28,7 @@
           ms-vscode-remote.remote-ssh
           github.codespaces
 
-          # LSP + Completion
-          visualstudioexptteam.vscodeintellicode
+          # LSP + Completion + Chat
           github.copilot
           github.copilot-chat
 
@@ -46,7 +48,7 @@
           tamasfe.even-better-toml
 
           # Python
-          pkgs.vscode-extensions.ms-python.python
+          ms-python.python
           ms-python.vscode-pylance
           ms-python.isort
           ms-python.black-formatter
