@@ -4,6 +4,7 @@
     { pkgs, ... }:
     let
       marketExt = pkgs.nix-vscode-extensions.vscode-marketplace-release;
+      unstableExt = pkgs.unstable.vscode-extensions;
     in
     {
       programs.vscode = {
@@ -41,7 +42,7 @@
           bradlc.vscode-tailwindcss
 
           # PDF + Markdown + Latex
-          yzane.markdown-pdf
+          unstableExt.yzane.markdown-pdf # use unstableExt to avoid having to build chromium unwrapped
           yzhang.markdown-all-in-one
           james-yu.latex-workshop
 

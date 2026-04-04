@@ -2,8 +2,7 @@
 let
   inherit (config.meta) allowedUnfreePackages;
   mkAllowUnfreePredicate =
-    lib: pkg:
-    builtins.elem (lib.toLower (lib.getName pkg)) (map lib.toLower allowedUnfreePackages);
+    lib: pkg: builtins.elem (lib.toLower (lib.getName pkg)) (map lib.toLower allowedUnfreePackages);
 in
 {
   flake.modules.nixos._baseNixpkgs =

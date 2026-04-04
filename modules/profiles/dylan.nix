@@ -91,7 +91,6 @@ in
           # Unstable packages
           tex-fmt
           gimp-with-plugins
-          weylus
           hledger
         ]);
 
