@@ -1,12 +1,20 @@
 { ... }:
 {
   flake.modules.homeManager.sensibleVscode =
-    { pkgs, ... }:
+    { pkgs, lib, ... }:
     let
       marketExt = pkgs.nix-vscode-extensions.vscode-marketplace-release;
       unstableExt = pkgs.unstable.vscode-extensions;
     in
     {
+      home.activation.ensureMutableVscodeExtensions = lib.hm.dag.entryBefore [ "linkGeneration" ] ''
+        ext_dir="$HOME/.vscode/extensions"
+        if [ -L "$ext_dir" ] && [ "$(readlink "$ext_dir" | cut -d/ -f1-3)" = "/nix/store" ]; then
+          rm "$ext_dir"
+          mkdir -p "$ext_dir"
+        fi
+      '';
+
       programs.vscode = {
         enable = true;
         package = pkgs.unstable.vscode;
