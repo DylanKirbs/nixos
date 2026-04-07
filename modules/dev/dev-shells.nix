@@ -5,7 +5,7 @@
     {
       devShells = {
         py = pkgs.mkShell {
-          nativeBuildInputs = [ pkgs.python312Full ];
+          nativeBuildInputs = [ pkgs.python312 ];
           shellHook = ''
             export LD_LIBRARY_PATH=${pkgs.stdenv.cc.cc.lib}/lib:${pkgs.zlib}/lib:$LD_LIBRARY_PATH
             export LIBRARY_PATH=${pkgs.stdenv.cc.cc.lib}/lib:${pkgs.zlib}/lib:$LIBRARY_PATH

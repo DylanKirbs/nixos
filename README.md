@@ -37,7 +37,7 @@ This is my personal NixOS configuration. It is a work in progress and is constan
 
 Currently, this configuration uses a dendritic flake setup with flake-parts. This allows composing machine bundles from reusable modules in a single repository.
 
-The flake imports packages from Nixpkgs 25.05 and unstable in two separate inputs. This allows more flexibility in the packages used in the configuration. It also defines `meta.allowedUnfreePackages` so unfree package allow-listing is managed in one place.
+The flake imports packages from Nixpkgs 25.11 and unstable in two separate inputs. This allows more flexibility in the packages used in the configuration. It also defines `meta.allowedUnfreePackages` so unfree package allow-listing is managed in one place.
 
 ## Checking the config
 

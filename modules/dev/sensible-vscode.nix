@@ -10,7 +10,7 @@
       programs.vscode = {
         enable = true;
         package = pkgs.unstable.vscode;
-        mutableExtensionsDir = false;
+        mutableExtensionsDir = true;
 
         profiles.default.extensions = with marketExt; [
           # Utilities

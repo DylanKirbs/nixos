@@ -29,8 +29,10 @@ in
 
       programs.git = {
         enable = true;
-        userName = "Dylan@Lab";
-        userEmail = "dylan.kirby.365@gmail.com";
+        settings.user = {
+          name = "Dylan@Lab";
+          email = "dylan.kirby.365@gmail.com";
+        };
       };
     };
 }

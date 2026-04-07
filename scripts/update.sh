@@ -4,4 +4,4 @@ set -euo pipefail
 
 setup="${1:-home}"
 
-sudo nix run nixpkgs/nixos-25.05#nixos-rebuild -- switch --flake ".#${setup}"
+sudo nix run nixpkgs/nixos-25.11#nixos-rebuild -- switch --flake ".#${setup}"
