@@ -7,6 +7,7 @@
       unstableExt = pkgs.unstable.vscode-extensions;
     in
     {
+      # I don't like this nonsense, I need to figure it out
       home.activation.ensureMutableVscodeExtensions = lib.hm.dag.entryBefore [ "linkGeneration" ] ''
         ext_dir="$HOME/.vscode/extensions"
         if [ -L "$ext_dir" ] && [ "$(readlink "$ext_dir" | cut -d/ -f1-3)" = "/nix/store" ]; then
@@ -18,7 +19,7 @@
       programs.vscode = {
         enable = true;
         package = pkgs.unstable.vscode;
-        mutableExtensionsDir = true;
+        mutableExtensionsDir = false;
 
         profiles.default.extensions = with marketExt; [
           # Utilities

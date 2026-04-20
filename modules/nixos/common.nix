@@ -22,7 +22,7 @@ in
           "networkmanager"
           "docker"
         ];
-        shell = pkgs.nushell;
+        shell = pkgs.bashInteractive;
       };
 
       services.zerotierone.enable = true;
