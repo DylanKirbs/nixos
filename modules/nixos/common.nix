@@ -22,8 +22,10 @@ in
           "networkmanager"
           "docker"
         ];
-        shell = pkgs.bashInteractive;
+        shell = pkgs.zsh;
       };
+
+      programs.zsh.enable = true;
 
       services.zerotierone.enable = true;
       services.zerotierone.joinNetworks = [ ];

@@ -12,7 +12,7 @@ in
     {
       imports = [
         hm.common
-        hm.bash
+        hm.zsh
         hm.gnome
         hm.sensibleVscode
         hm.lazyNvim
