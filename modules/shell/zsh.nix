@@ -15,7 +15,7 @@
           mv = "mv -p";
         };
 
-        initExtra = ''
+        initContent = ''
           zh() {
             if [[ $# -eq 0 ]]; then
               local selected
